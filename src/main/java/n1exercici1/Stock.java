@@ -55,4 +55,8 @@ public class Stock {
 		}
 		return decorations;
 	}
+	public void addProduct(Product product) {
+		products.add(product);
+		stockValue += product.getPrice();
+	}
 }

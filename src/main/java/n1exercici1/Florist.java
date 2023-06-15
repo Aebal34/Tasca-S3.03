@@ -10,6 +10,7 @@ public class Florist {
 	
 	public Florist(String name) {
 		this.name = name;
+		this.stock = stock.getInstance();
 	}
 	
 	

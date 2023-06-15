@@ -7,4 +7,8 @@ public abstract class Product {
 	public Product(double price) {
 		this.price = price;
 	}
+	
+	public double getPrice() {
+		return price;
+	}
 }
