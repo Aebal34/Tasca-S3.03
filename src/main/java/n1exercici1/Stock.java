@@ -7,6 +7,7 @@ public class Stock {
 	//---ATTRIBUTES---
 	private List<Product> products;
 	private double stockValue;
+	private Florist florist;
 	
 	//---CONSTRUCTOR---
 	public Stock() {
@@ -21,6 +22,10 @@ public class Stock {
 	
 	public List<Product> getProducts(){
 		return products;
+	}
+	
+	public void setFlorist(Florist florist) {
+		this.florist = florist;
 	}
 	
 	public List<Tree> getTreeStock(){

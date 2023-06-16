@@ -2,15 +2,18 @@ package n1exercici1;
 
 public abstract class Product {
 
+	//---ATTRIBUTES---
 	protected double price;
 	protected int id;
 	protected int ammount;
 	
+	//---CONSTRUCTOR---
 	public Product(double price, int ammount) {
 		this.price = price;
 		this.ammount = ammount;
 	}
 	
+	//---GETTERS & SETTERS---
 	public double getPrice() {
 		return price;
 	}
@@ -23,6 +26,7 @@ public abstract class Product {
 		return ammount;
 	}
 	
+	//---DATA CONTROL---
 	public void increaseAmmount() {
 		ammount++;
 	}
@@ -38,4 +42,10 @@ public abstract class Product {
 			
 		}
 	}
+	
+	//PERSISTENCE
+	public abstract String toData();
+	
+	public abstract void fromData(String data);
+
 }

@@ -16,6 +16,9 @@ public class Tree extends Product{
 	public String toString() {
 		return "Tree height: " + height + ", price:" + price+", ammount:"+ammount;
 	}
-	
-	
+
+	@Override
+	public String toData() {
+		return "Tree;"+height+";"+price+";"+ammount;
+	}
 }

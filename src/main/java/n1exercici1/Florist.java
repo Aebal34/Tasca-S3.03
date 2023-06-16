@@ -12,6 +12,7 @@ public class Florist {
 		this.name = name;
 		this.stock = new Stock();
 		purchases = new ArrayList<Ticket>();
+		stock.setFlorist(this);
 	}
 	
 	public Stock getStock() {
