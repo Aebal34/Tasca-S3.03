@@ -4,22 +4,17 @@ import java.util.*;
 
 public class Stock {
 
+	//---ATTRIBUTES---
 	private List<Product> products;
 	private double stockValue;
-	private static Stock stock;
 	
-	private Stock() {
+	//---CONSTRUCTOR---
+	public Stock() {
 		this.products = new ArrayList<Product>();
+		stockValue = 0;
 	}
 	
-	public static Stock getInstance() {
-		
-		if(stock == null) {
-			stock = new Stock();
-		}
-		return stock;
-	}
-	
+	//---GETTERS & SETTERS---
 	public double getStockValue() {
 		return stockValue;
 	}
@@ -55,8 +50,77 @@ public class Stock {
 		}
 		return decorations;
 	}
+	
+	public Product getFlower(int id) {
+		return products.stream()
+					.filter(p -> p instanceof Flower)
+					.filter(p -> p.getId()==id)
+					.findFirst()
+					.orElse(null);
+	}
+	
+	public Product getDecoration(int id) {
+		return products.stream()
+					.filter(p -> p instanceof Decoration)
+					.filter(p -> p.getId()==id)
+					.findFirst()
+					.orElse(null);
+	}
+	
+	public Product getTree(int id) {
+		return products.stream()
+					.filter(p -> p instanceof Tree)
+					.filter(p -> p.getId()==id)
+					.findFirst()
+					.orElse(null);
+	}
+	
+	//---DATA CONTROL---
+	
 	public void addProduct(Product product) {
 		products.add(product);
-		stockValue += product.getPrice();
+		stockValue += product.getPrice()*product.getAmmount();
+	}
+	
+	
+	
+	public void removeFlower(int id) {
+		if(getFlower(id)!=null) {
+			if(getFlower(id).getAmmount()>1) {
+				getFlower(id).decreaseAmmount();
+			}else {
+				products.remove(getFlower(id));	
+			}
+		}
+	}
+	
+	public void removeDecoration(int id) {
+		if(getDecoration(id)!=null) {
+			if(getDecoration(id).getAmmount()>1) {
+				getDecoration(id).decreaseAmmount();
+			}else {
+				products.remove(getDecoration(id));
+			}
+		}
+		products.remove(getDecoration(id));	
+	}
+	
+	public void removeTree(int id) {
+		products.remove(getTree(id));	
+	}
+	
+	public void printStock() {
+		
+		  System.out.println(" __________________________________________"+"\n");
+		for(Tree tree : getTreeStock()) {
+			System.out.print("|    "+tree+"\n");
+		}
+		for(Flower flower : getFlowerStock()) {
+			System.out.print("|    "+flower+"\n");
+		}
+		for(Decoration decoration : getDecorationStock()) {
+			System.out.print("|    "+decoration+"\n");
+		}
+		System.out.println(" __________________________________________");
 	}
 }

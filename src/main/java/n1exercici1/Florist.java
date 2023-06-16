@@ -10,8 +10,12 @@ public class Florist {
 	
 	public Florist(String name) {
 		this.name = name;
-		this.stock = stock.getInstance();
+		this.stock = new Stock();
+		purchases = new ArrayList<Ticket>();
 	}
 	
+	public Stock getStock() {
+		return stock;
+	}
 	
 }
