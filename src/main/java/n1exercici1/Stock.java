@@ -40,6 +40,7 @@ public class Stock {
 		}
 		return trees;
 	}
+	
 	public List<Flower> getFlowerStock(){
 		List<Flower> flowers = new ArrayList<Flower>();
 		for(Product product : products) {

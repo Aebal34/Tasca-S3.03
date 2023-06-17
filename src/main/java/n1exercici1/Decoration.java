@@ -33,9 +33,8 @@ public class Decoration extends Product{
 		} 
 	}
 	
-	@Override
-	public String toString() {
-		return "Decoration material: " + material + ", price:" + price+", ammount:"+ammount;
+	public String getMaterial() {
+		return material;
 	}
 
 	//---PERSISTENCE---
@@ -50,5 +49,11 @@ public class Decoration extends Product{
 		this.material = attributes[1];
 		this.price = Double.parseDouble(attributes[2]);
 		this.ammount = Integer.parseInt(attributes[3]);
+	}
+	
+	//---DATA CONTROL---
+	@Override
+	public String toString() {
+		return "Decoration material: " + material + ", price:" + price+", ammount:"+ammount;
 	}
 }

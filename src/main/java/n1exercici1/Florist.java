@@ -5,10 +5,12 @@ import java.io.*;
 
 public class Florist {
 
+	//---ATTRIBUTES---
 	private String name;
 	private Stock stock;
 	private List<Ticket> purchases;
 	
+	//---CONSTRUCTOR---
 	public Florist(String name, Stock stock) {
 		this.name = name;
 		this.stock = stock;
@@ -16,10 +18,12 @@ public class Florist {
 		stock.setFlorist(this);
 	}
 	
+	//---GETTERS & SETTERS
 	public Stock getStock() {
 		return stock;
 	}
 	
+	//---PERSISTENCE---
 	public void loadStock(String stockPath) {
 		
 		try {

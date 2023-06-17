@@ -19,9 +19,9 @@ public class App {
 		
 		botaniculaStock.printStock();
 		
-		botaniculaStock.removeTree(1);
-		botaniculaStock.removeFlower(2);
-		botaniculaStock.removeDecoration(1);
+		botaniculaStock.removeTree(1, 1);
+		botaniculaStock.removeFlower(2, 2);
+		botaniculaStock.removeDecoration(1, 2);
 		
 		botaniculaStock.printStock();
 

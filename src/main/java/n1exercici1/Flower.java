@@ -17,9 +17,13 @@ public class Flower extends Product{
 	public Flower() {
 	}
 
-	@Override
-	public String toString() {
-		return "Flower color: " + color + ", price:" + price+", ammount:"+ammount;
+	//---GETTERS & SETTERS
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
 	}
 
 	//---PERSISTENCE---
@@ -34,5 +38,11 @@ public class Flower extends Product{
 		this.color = attributes[1];
 		this.price = Double.parseDouble(attributes[2]);
 		this.ammount = Integer.parseInt(attributes[3]);
+	}
+	
+	//---DATA CONTROL---
+	@Override
+	public String toString() {
+		return "Flower color: " + color + ", price:" + price+", ammount:"+ammount;
 	}
 }

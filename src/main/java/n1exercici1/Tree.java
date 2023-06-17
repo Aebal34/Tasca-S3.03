@@ -17,10 +17,14 @@ public class Tree extends Product{
 	public Tree() {
 		
 	}
+	
+	//---GETTERS & SETTERS
+	public double getHeight() {
+		return height;
+	}
 
-	@Override
-	public String toString() {
-		return "Tree height: " + height + ", price:" + price+", ammount:"+ammount;
+	public void setHeight(double height) {
+		this.height = height;
 	}
 
 	//---PERSISTENCE---
@@ -36,5 +40,11 @@ public class Tree extends Product{
 		this.price = Double.parseDouble(attributes[2]);
 		this.ammount = Integer.parseInt(attributes[3]);
 		this.id = Integer.parseInt(attributes[4]);
+	}
+	
+	//---DATA CONTROL---
+	@Override
+	public String toString() {
+		return "Tree height: " + height + ", price:" + price+", ammount:"+ammount;
 	}
 }
