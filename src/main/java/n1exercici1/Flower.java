@@ -2,9 +2,11 @@ package n1exercici1;
 
 public class Flower extends Product{
 
+	//---ATTRIBUTES---
 	private static int count = 1;
 	private String color;
 	
+	//---CONSTRUCTORS---
 	public Flower(String color, double price, int ammount) {
 		super(price, ammount);
 		this.color = color;
@@ -12,18 +14,19 @@ public class Flower extends Product{
 		count++;
 	}
 	
-	
+	public Flower() {
+	}
+
 	@Override
 	public String toString() {
 		return "Flower color: " + color + ", price:" + price+", ammount:"+ammount;
 	}
 
-
+	//---PERSISTENCE---
 	@Override
 	public String toData() {
 		return "Flower;"+color+";"+price+";"+ammount;
 	}
-
 
 	@Override
 	public void fromData(String data) {

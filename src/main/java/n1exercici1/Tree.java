@@ -2,9 +2,11 @@ package n1exercici1;
 
 public class Tree extends Product{
 
+	//---ATTRIBUTES---
 	private static int count = 1;
 	private double height;
 	
+	//---CONSTRUCTORS---
 	public Tree(double height, double price, int ammount) {
 		super(price, ammount);
 		this.height = height;
@@ -12,14 +14,19 @@ public class Tree extends Product{
 		count++;
 	}
 
+	public Tree() {
+		
+	}
+
 	@Override
 	public String toString() {
 		return "Tree height: " + height + ", price:" + price+", ammount:"+ammount;
 	}
 
+	//---PERSISTENCE---
 	@Override
 	public String toData() {
-		return "Tree;"+height+";"+price+";"+ammount;
+		return "Tree;"+height+";"+price+";"+ammount+";"+id;
 	}
 
 	@Override
@@ -28,5 +35,6 @@ public class Tree extends Product{
 		this.height = Double.parseDouble(attributes[1]);
 		this.price = Double.parseDouble(attributes[2]);
 		this.ammount = Integer.parseInt(attributes[3]);
+		this.id = Integer.parseInt(attributes[4]);
 	}
 }

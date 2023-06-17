@@ -12,6 +12,9 @@ public abstract class Product {
 		this.price = price;
 		this.ammount = ammount;
 	}
+	public Product() {
+		
+	}
 	
 	//---GETTERS & SETTERS---
 	public double getPrice() {

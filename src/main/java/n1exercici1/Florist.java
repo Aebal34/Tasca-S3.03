@@ -24,18 +24,27 @@ public class Florist {
 		
 		try {
 			var reader = new BufferedReader(new FileReader(stockPath));
-			while(reader.readLine() != null) {
+			String line;
+			while((line = reader.readLine()) != null) {
 				String[] product = reader.readLine().split(";");
 				String type = product[0];
 				switch(type) {
-				case "Tree":
-					break;
-				case "Flower":
-					break;
-				case "Decoration":
-					break;
+					case "Tree":
+						var tree = new Tree();
+						tree.fromData(line);
+						stock.getProducts().add(tree);
+						break;
+					case "Flower":
+						var flower = new Flower();
+						flower.fromData(line);
+						stock.getProducts().add(flower);
+						break;
+					case "Decoration":
+						var decoration = new Decoration();
+						decoration.fromData(line);
+						stock.getProducts().add(decoration);
+						break;
 				}
-				
 			}
 		}catch(IOException e) {
 			e.getStackTrace();

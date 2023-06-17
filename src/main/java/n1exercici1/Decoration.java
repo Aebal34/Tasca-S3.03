@@ -2,9 +2,11 @@ package n1exercici1;
 
 public class Decoration extends Product{
 
+	//---ATTRIBUTES---
 	private static int count = 1;
 	private String material;
 	
+	//---CONSTRUCTORS---
 	public Decoration(String material, double price, int ammount) {
 		super(price, ammount);
 		if(material.toUpperCase().equals("WOOD") || material.toUpperCase().equals("METAL")) {
@@ -17,6 +19,11 @@ public class Decoration extends Product{
 		count++;
 	}
 	
+	public Decoration() {
+		
+	}
+
+	//---SETTERS & GETTERS---
 	public void setMaterial(String material) {
 		if(material.toUpperCase().equals("WOOD") || material.toUpperCase().equals("METAL")) {
 			this.material = material;
@@ -31,6 +38,7 @@ public class Decoration extends Product{
 		return "Decoration material: " + material + ", price:" + price+", ammount:"+ammount;
 	}
 
+	//---PERSISTENCE---
 	@Override
 	public String toData() {
 		return "Flower;"+material+";"+price+";"+ammount;
