@@ -1,6 +1,7 @@
 package n1exercici1;
 
 import java.util.*;
+import java.io.*;
 
 public class Stock {
 
@@ -8,11 +9,13 @@ public class Stock {
 	private List<Product> products;
 	private double stockValue;
 	private Florist florist;
+	private String filePath;
 	
 	//---CONSTRUCTOR---
-	public Stock() {
+	public Stock(String filePath) {
 		this.products = new ArrayList<Product>();
 		stockValue = 0;
+		this.filePath = filePath;
 	}
 	
 	//---GETTERS & SETTERS---
@@ -111,6 +114,13 @@ public class Stock {
 	}
 	
 	public void removeTree(int id) {
+		if(getTree(id)!=null) {
+			if(getTree(id).getAmmount()>1) {
+				getTree(id).decreaseAmmount();
+			}else {
+				products.remove(getTree(id));
+			}
+		}
 		products.remove(getTree(id));	
 	}
 	
@@ -127,5 +137,26 @@ public class Stock {
 			System.out.print("|    "+decoration+"\n");
 		}
 		System.out.println(" __________________________________________");
+	}
+	
+	//PERSISTENCE
+	public List<String> toData() {
+		var data = new ArrayList<String>();
+		for(Product product : products) {
+			data.add(product.toData());
+		}
+		return data;
+	}
+	
+	private void updateFile() {
+		try {
+			var writer = new BufferedWriter(new FileWriter(filePath));
+			for(Product product : products) {
+				writer.write(product.toData());
+				writer.newLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

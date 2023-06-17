@@ -4,8 +4,8 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		//Instantiate florist
-		Florist botanicula = new Florist("Bonaticula");
+		//Instantiate florist with filepath of Stock.txt
+		Florist botanicula = new Florist("Bonaticula", new Stock("D:\\eclipse-workspace\\Tasca-S3.03\\src\\main\\resources\\StockData.txt"));
 		
 		//Instantiate Stock and add 2 trees, 2 flowers and 2 decorations
 		

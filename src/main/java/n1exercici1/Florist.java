@@ -1,6 +1,7 @@
 package n1exercici1;
 
 import java.util.*;
+import java.io.*;
 
 public class Florist {
 
@@ -8,9 +9,9 @@ public class Florist {
 	private Stock stock;
 	private List<Ticket> purchases;
 	
-	public Florist(String name) {
+	public Florist(String name, Stock stock) {
 		this.name = name;
-		this.stock = new Stock();
+		this.stock = stock;
 		purchases = new ArrayList<Ticket>();
 		stock.setFlorist(this);
 	}
