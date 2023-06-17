@@ -1,6 +1,6 @@
 package n1exercici1;
 
-public class Tree extends Product{
+public class Tree extends Product implements Persistent{
 
 	//---ATTRIBUTES---
 	private static int count = 1;
@@ -10,7 +10,7 @@ public class Tree extends Product{
 	public Tree(double height, double price, int ammount) {
 		super(price, ammount);
 		this.height = height;
-		this.id = count;
+		this.id = "T"+count;
 		count++;
 	}
 
@@ -39,7 +39,7 @@ public class Tree extends Product{
 		this.height = Double.parseDouble(attributes[1]);
 		this.price = Double.parseDouble(attributes[2]);
 		this.ammount = Integer.parseInt(attributes[3]);
-		this.id = Integer.parseInt(attributes[4]);
+		this.id = attributes[4];
 	}
 	
 	//---DATA CONTROL---

@@ -7,28 +7,23 @@ public class Stock {
 
 	//---ATTRIBUTES---
 	private List<Product> products;
-	private double stockValue;
-	private Florist florist;
+	private double value;
 	private String filePath;
 	
 	//---CONSTRUCTOR---
 	public Stock(String filePath) {
 		this.products = new ArrayList<Product>();
-		stockValue = 0;
+		value = 0;
 		this.filePath = filePath;
 	}
 	
 	//---GETTERS & SETTERS---
-	public double getStockValue() {
-		return stockValue;
+	public double getValue() {
+		return value;
 	}
 	
 	public List<Product> getProducts(){
 		return products;
-	}
-	
-	public void setFlorist(Florist florist) {
-		this.florist = florist;
 	}
 	
 	public List<Tree> getTreeStock(){
@@ -60,73 +55,31 @@ public class Stock {
 		return decorations;
 	}
 	
-	public Product getFlower(int id) {
+	public Product getProduct(String id) {
 		return products.stream()
-					.filter(p -> p instanceof Flower)
-					.filter(p -> p.getId()==id)
-					.findFirst()
-					.orElse(null);
-	}
-	
-	public Product getDecoration(int id) {
-		return products.stream()
-					.filter(p -> p instanceof Decoration)
-					.filter(p -> p.getId()==id)
-					.findFirst()
-					.orElse(null);
-	}
-	
-	public Product getTree(int id) {
-		return products.stream()
-					.filter(p -> p instanceof Tree)
-					.filter(p -> p.getId()==id)
-					.findFirst()
-					.orElse(null);
+						.filter(p -> p.getId().equals(id))
+						.findFirst()
+						.orElse(null);
 	}
 	
 	//---DATA CONTROL---
 	public void addProduct(Product product) {
 		products.add(product);
-		stockValue += product.getPrice()*product.getAmmount();
+		value += product.getPrice()*product.getAmmount();
 		updateFile();
 	}
 	
-	public void removeFlower(int id, int ammount) {
-		if(getFlower(id)!=null) {
-			if(getFlower(id).getAmmount()>1) {
-				stockValue -= getFlower(id).getPrice()*ammount;
-				getFlower(id).decreaseAmmount(ammount);
+	public void removeProduct(String id, int ammount) {
+		if(getProduct(id) != null) {
+			var product = getProduct(id);
+			if((product.getAmmount()-ammount)>=1) {
+				value -= product.getPrice()*ammount;
+				product.decreaseAmmount(ammount);
 			}else {
-				stockValue -= getFlower(id).getPrice()*getFlower(id).getAmmount();
-				products.remove(getFlower(id));	
+				value -= product.getPrice()*product.getAmmount();
+				products.remove(product);
 			}
 		}
-		updateFile();
-	}
-	
-	public void removeDecoration(int id, int ammount) {
-		if(getDecoration(id)!=null) {
-			if(getDecoration(id).getAmmount()>1) {
-				stockValue -= getDecoration(id).getPrice()*ammount;
-				getDecoration(id).decreaseAmmount(ammount);
-			}else {
-				stockValue -= getDecoration(id).getPrice()*getDecoration(id).getAmmount();
-				products.remove(getDecoration(id));
-			}
-		}
-		updateFile();
-	}
-	
-	public void removeTree(int id, int ammount) {
-		if(getTree(id)!=null) {
-			if(getTree(id).getAmmount()>1) {
-				stockValue -= getTree(id).getPrice()*ammount;
-				getTree(id).decreaseAmmount(ammount);
-			}else {
-				stockValue -= getTree(id).getPrice()*getTree(id).getAmmount();
-				products.remove(getTree(id));
-			}
-		}	
 		updateFile();
 	}
 	
@@ -143,6 +96,7 @@ public class Stock {
 			System.out.print("|    "+decoration+"\n");
 		}
 		System.out.println(" __________________________________________");
+		System.out.println("Total stock value: "+value);
 	}
 	
 	//PERSISTENCE
@@ -153,6 +107,7 @@ public class Stock {
 				writer.write(product.toData());
 				writer.newLine();
 			}
+			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

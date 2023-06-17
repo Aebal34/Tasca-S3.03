@@ -1,6 +1,6 @@
 package n1exercici1;
 
-public class Decoration extends Product{
+public class Decoration extends Product implements Persistent{
 
 	//---ATTRIBUTES---
 	private static int count = 1;
@@ -15,7 +15,7 @@ public class Decoration extends Product{
 			System.out.println("The material is not correct. Material field empty");
 			this.material = "";
 		}
-		this.id = count;
+		this.id = "D"+count;
 		count++;
 	}
 	
@@ -40,7 +40,7 @@ public class Decoration extends Product{
 	//---PERSISTENCE---
 	@Override
 	public String toData() {
-		return "Flower;"+material+";"+price+";"+ammount;
+		return "Flower;"+material+";"+price+";"+ammount+";"+id;
 	}
 
 	@Override

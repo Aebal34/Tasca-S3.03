@@ -1,10 +1,10 @@
 package n1exercici1;
 
-public abstract class Product {
+public class Product implements Persistent{
 
 	//---ATTRIBUTES---
 	protected double price;
-	protected int id;
+	protected String id;
 	protected int ammount;
 	
 	//---CONSTRUCTOR---
@@ -21,12 +21,16 @@ public abstract class Product {
 		return price;
 	}
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 	
 	public int getAmmount() {
 		return ammount;
+	}
+	
+	public void setAmmount(int ammount) {
+		this.ammount = ammount;
 	}
 	
 	//---DATA CONTROL---
@@ -41,10 +45,14 @@ public abstract class Product {
 	public void decreaseAmmount(int ammount) {
 		this.ammount -= ammount;
 	}
-	
-	//PERSISTENCE
-	public abstract String toData();
-	
-	public abstract void fromData(String data);
-
+	@Override
+	public String toData() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void fromData(String data) {
+		// TODO Auto-generated method stub
+		
+	}
 }

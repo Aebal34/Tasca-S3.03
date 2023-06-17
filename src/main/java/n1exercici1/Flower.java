@@ -1,6 +1,6 @@
 package n1exercici1;
 
-public class Flower extends Product{
+public class Flower extends Product  implements Persistent{
 
 	//---ATTRIBUTES---
 	private static int count = 1;
@@ -10,7 +10,7 @@ public class Flower extends Product{
 	public Flower(String color, double price, int ammount) {
 		super(price, ammount);
 		this.color = color;
-		this.id = count;
+		this.id = "F"+count;
 		count++;
 	}
 	
@@ -29,7 +29,7 @@ public class Flower extends Product{
 	//---PERSISTENCE---
 	@Override
 	public String toData() {
-		return "Flower;"+color+";"+price+";"+ammount;
+		return "Flower;"+color+";"+price+";"+ammount+";"+id;
 	}
 
 	@Override

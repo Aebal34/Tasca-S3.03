@@ -5,10 +5,11 @@ public class App {
 	public static void main(String[] args) {
 		
 		//Instantiate florist with filepath of Stock.txt
-		Florist botanicula = new Florist("Bonaticula", new Stock("D:\\eclipse-workspace\\Tasca-S3.03\\src\\main\\resources\\StockData.txt"));
+		String stockPath = "D:\\eclipse-workspace\\Tasca-S3.03\\src\\main\\resources\\StockData.txt";
+		Florist botanicula = new Florist("Bonaticula", new Stock(stockPath));
 		
 		//Instantiate Stock and add 2 trees, 2 flowers and 2 decorations
-		
+
 		Stock botaniculaStock = botanicula.getStock();
 		botaniculaStock.addProduct(new Tree(2.78, 69.95, 2));
 		botaniculaStock.addProduct(new Tree(0.54, 29.95, 1));
@@ -19,11 +20,14 @@ public class App {
 		
 		botaniculaStock.printStock();
 		
-		botaniculaStock.removeTree(1, 1);
-		botaniculaStock.removeFlower(2, 2);
-		botaniculaStock.removeDecoration(1, 2);
+		//Remove diverse products from stock
+		botaniculaStock.removeProduct("T1", 1);
+		botaniculaStock.removeProduct("F2", 2);
+		botaniculaStock.removeProduct("D1", 2);
 		
-		botaniculaStock.printStock();
+		botanicula.getStock().printStock();
+		
+		
 
 	}
 

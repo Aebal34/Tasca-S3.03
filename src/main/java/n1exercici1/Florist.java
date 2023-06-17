@@ -15,13 +15,14 @@ public class Florist {
 		this.name = name;
 		this.stock = stock;
 		purchases = new ArrayList<Ticket>();
-		stock.setFlorist(this);
 	}
 	
 	//---GETTERS & SETTERS
 	public Stock getStock() {
 		return stock;
 	}
+	
+	
 	
 	//---PERSISTENCE---
 	public void loadStock(String stockPath) {
@@ -30,7 +31,7 @@ public class Florist {
 			var reader = new BufferedReader(new FileReader(stockPath));
 			String line;
 			while((line = reader.readLine()) != null) {
-				String[] product = reader.readLine().split(";");
+				String[] product = line.split(";");
 				String type = product[0];
 				switch(type) {
 					case "Tree":
