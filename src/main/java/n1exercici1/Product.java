@@ -38,8 +38,6 @@ public abstract class Product {
 	public void decreaseAmmount(int ammount) {
 		if(this.ammount > ammount) {
 			this.ammount -= ammount;
-		}else if(this.ammount == ammount) {
-			
 		}
 	}
 	

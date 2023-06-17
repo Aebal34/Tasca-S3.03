@@ -21,4 +21,12 @@ public class Tree extends Product{
 	public String toData() {
 		return "Tree;"+height+";"+price+";"+ammount;
 	}
+
+	@Override
+	public void fromData(String data) {
+		String[] attributes = data.split(";");
+		this.height = Double.parseDouble(attributes[1]);
+		this.price = Double.parseDouble(attributes[2]);
+		this.ammount = Integer.parseInt(attributes[3]);
+	}
 }

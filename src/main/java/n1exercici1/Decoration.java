@@ -30,4 +30,17 @@ public class Decoration extends Product{
 	public String toString() {
 		return "Decoration material: " + material + ", price:" + price+", ammount:"+ammount;
 	}
+
+	@Override
+	public String toData() {
+		return "Flower;"+material+";"+price+";"+ammount;
+	}
+
+	@Override
+	public void fromData(String data) {
+		String[] attributes = data.split(";");
+		this.material = attributes[1];
+		this.price = Double.parseDouble(attributes[2]);
+		this.ammount = Integer.parseInt(attributes[3]);
+	}
 }

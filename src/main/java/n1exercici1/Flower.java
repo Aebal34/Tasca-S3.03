@@ -17,4 +17,19 @@ public class Flower extends Product{
 	public String toString() {
 		return "Flower color: " + color + ", price:" + price+", ammount:"+ammount;
 	}
+
+
+	@Override
+	public String toData() {
+		return "Flower;"+color+";"+price+";"+ammount;
+	}
+
+
+	@Override
+	public void fromData(String data) {
+		String[] attributes = data.split(";");
+		this.color = attributes[1];
+		this.price = Double.parseDouble(attributes[2]);
+		this.ammount = Integer.parseInt(attributes[3]);
+	}
 }
