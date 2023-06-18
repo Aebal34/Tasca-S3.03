@@ -83,6 +83,13 @@ public class Stock {
 		updateFile();
 	}
 	
+	public void updateValue() {
+		this.value = 0;
+		for(Product product : products) {
+			this.value += product.getPrice()*product.getAmmount();
+		}
+	}
+	
 	public void printStock() {
 		
 		  System.out.println(" __________________________________________"+"\n");

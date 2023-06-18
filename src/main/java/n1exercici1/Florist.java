@@ -26,12 +26,21 @@ public class Florist {
 	public void purchase(ShoppingCart cart) {
 		var ticket = new Ticket(cart.getProducts());
 		purchases.add(ticket);
+		stock.updateValue();
 	}
 	
 	public void printTickets() {
 		for(Ticket ticket : purchases) {
 			ticket.printTicket();
 		}
+	}
+	
+	public void printTotalSales() {
+		double finalAmmount = 0;
+		for(Ticket ticket : purchases) {
+			finalAmmount += ticket.getValue();
+		}
+		System.out.println("The total ammount sold in this florist is: "+finalAmmount);
 	}
 	
 	//---PERSISTENCE---
@@ -73,13 +82,14 @@ public class Florist {
 			var reader = new BufferedReader(new FileReader(ticketsPath));
 			String line;
 			while((line = reader.readLine()) != null){
-				String[] elements = line.split("|");
+				String[] elements = line.split(",");
 				var ticket = new Ticket();
 				ticket.setId(Integer.parseInt(elements[1]));
 				for (int i = 2; i<elements.length;i++) {
 					ticket.fromData(elements[i]);
-					purchases.add(ticket);
 				}
+				ticket.updateValue();
+				purchases.add(ticket);
 			}
 			reader.close();
 		}catch(IOException e) {

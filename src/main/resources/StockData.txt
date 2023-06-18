@@ -1,6 +1,4 @@
-Tree;2.78;69.95;2;T1
-Tree;0.54;29.95;1;T2
-Flower;Purple;18.45;5;F1
-Flower;White;14.25;3;F2
-Flower;Wood;129.99;2;D1
-Flower;Metal;81.75;4;D2
+Tree;2.78;69.95;1;T1
+Flower;Purple;18.45;2;F1
+Flower;White;14.25;1;F2
+Decoration;Metal;81.75;3;D2

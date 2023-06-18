@@ -6,6 +6,7 @@ public class App {
 		
 		//Instantiate florist with filepath of Stock.txt
 		String stockPath = "D:\\eclipse-workspace\\Tasca-S3.03\\src\\main\\resources\\StockData.txt";
+		String ticketsPath = "D:\\eclipse-workspace\\Tasca-S3.03\\src\\main\\resources\\Tickets.txt";
 		Florist botanicula = new Florist("Bonaticula", new Stock(stockPath));
 		
 		//Instantiate Stock and add 2 trees, 2 flowers and 2 decorations
@@ -32,8 +33,8 @@ public class App {
 		
 		//We add the items we want to buy
 		
-		cart.addItem("D2", 2, botaniculaStock);
-		cart.addItem("F1", 5, botaniculaStock);
+		cart.addItem("D2", 3, botaniculaStock);
+		cart.addItem("F1", 2, botaniculaStock);
 		cart.addItem("T2", 1, botaniculaStock);
 		
 		//And now we create a ticket for that shopping cart
@@ -41,9 +42,15 @@ public class App {
 		
 		botanicula.getStock().printStock();
 		
+		//We save purchases of the day
+		botanicula.saveTickets(ticketsPath);
 		
+		//We load them again
+		//botanicula.loadTickets(ticketsPath);
 		
-
+		botanicula.printTickets();
+		
+		//And we look at all the money we've won
+		botanicula.printTotalSales();
 	}
-
 }

@@ -1,0 +1,1 @@
+Ticket,1,Decoration;Metal;81.75;3;D2,Flower;Purple;18.45;2;F1,Tree;0.54;29.95;1;T2

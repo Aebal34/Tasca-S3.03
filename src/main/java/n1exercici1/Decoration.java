@@ -40,7 +40,7 @@ public class Decoration extends Product implements Persistent{
 	//---PERSISTENCE---
 	@Override
 	public String toData() {
-		return "Flower;"+material+";"+price+";"+ammount+";"+id;
+		return "Decoration;"+material+";"+price+";"+ammount+";"+id;
 	}
 
 	@Override

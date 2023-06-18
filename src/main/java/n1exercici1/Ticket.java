@@ -36,6 +36,10 @@ public class Ticket implements Persistent{
 		this.id = id;
 	}
 	
+	public double getValue() {
+		return value;
+	}
+	
 	//---DATA CONTROL---
 	public void addItem(String id, int ammount, Stock stock) {
 		var item = stock.getProduct(id);
@@ -53,16 +57,20 @@ public class Ticket implements Persistent{
 		for(Product item : items) {
 			System.out.println("	|"+item+"\n");
 		}
-		System.out.println("Total value: "+value+" }");
+		System.out.println("		|Total value: "+value+" }");
+	}
+	
+	public void updateValue() {
+		this.value = getItemsValue();
 	}
 
 	//---PERSISTENCE---
 	@Override
 	public String toData() {
 							
-		String data = "Ticket|"+id;
+		String data = "Ticket,"+id;
 		for(Product item : items) {
-			data += "|"+item.toData();
+			data += ","+item.toData();
 		}
 		
 		return data;
