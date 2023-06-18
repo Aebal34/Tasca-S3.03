@@ -22,7 +22,17 @@ public class Florist {
 		return stock;
 	}
 	
+	//---FUNCTIONALITY
+	public void purchase(ShoppingCart cart) {
+		var ticket = new Ticket(cart.getProducts());
+		purchases.add(ticket);
+	}
 	
+	public void printTickets() {
+		for(Ticket ticket : purchases) {
+			ticket.printTicket();
+		}
+	}
 	
 	//---PERSISTENCE---
 	public void loadStock(String stockPath) {
@@ -77,7 +87,7 @@ public class Florist {
 		}
 	}
 	
-	public void updateTickets(String ticketsPath) {
+	public void saveTickets(String ticketsPath) {
 		
 		try {
 			var writer = new BufferedWriter(new FileWriter(ticketsPath));

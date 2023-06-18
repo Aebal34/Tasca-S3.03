@@ -7,15 +7,13 @@ public class Ticket implements Persistent{
 	//---ATTRIBUTES---
 	private List<Product> items;
 	private double value;
-	private Stock stock;
 	private int id;
 	private static int count = 1;
 	
 	//---CONSTRUCTORS---
-	public Ticket(ArrayList<Product> items, Stock stock) {
+	public Ticket(List<Product> items) {
 		this.items = items;
 		value = getItemsValue();
-		this.stock = stock;
 		this.id = count;
 		count++;
 	}
@@ -39,7 +37,7 @@ public class Ticket implements Persistent{
 	}
 	
 	//---DATA CONTROL---
-	public void addItem(String id, int ammount) {
+	public void addItem(String id, int ammount, Stock stock) {
 		var item = stock.getProduct(id);
 		if(ammount <= item.getAmmount()){
 			stock.removeProduct(id, ammount);
@@ -47,6 +45,15 @@ public class Ticket implements Persistent{
 			items.add(item);
 		}
 		value = getItemsValue();
+	}
+	
+	public void printTicket() {
+		
+		System.out.println("Ticket: "+id+" { "+"\n");
+		for(Product item : items) {
+			System.out.println("	|"+item+"\n");
+		}
+		System.out.println("Total value: "+value+" }");
 	}
 
 	//---PERSISTENCE---

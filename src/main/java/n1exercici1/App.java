@@ -27,6 +27,21 @@ public class App {
 		
 		botanicula.getStock().printStock();
 		
+		//Instantiate a cart to buy items
+		var cart = new ShoppingCart();
+		
+		//We add the items we want to buy
+		
+		cart.addItem("D2", 2, botaniculaStock);
+		cart.addItem("F1", 5, botaniculaStock);
+		cart.addItem("T2", 1, botaniculaStock);
+		
+		//And now we create a ticket for that shopping cart
+		botanicula.purchase(cart);
+		
+		botanicula.getStock().printStock();
+		
+		
 		
 
 	}

@@ -38,6 +38,10 @@ public class Product implements Persistent{
 		ammount++;
 	}
 	
+	public void increaseAmmount(int ammount) {
+		this.ammount += ammount;
+	}
+	
 	public void decreaseAmmount() {
 		ammount--;
 	}
