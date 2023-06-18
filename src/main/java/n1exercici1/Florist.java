@@ -51,6 +51,41 @@ public class Florist {
 						break;
 				}
 			}
+			reader.close();
+		}catch(IOException e) {
+			e.getStackTrace();
+		}
+	}
+	
+	public void loadTickets(String ticketsPath) {
+		
+		try {
+			var reader = new BufferedReader(new FileReader(ticketsPath));
+			String line;
+			while((line = reader.readLine()) != null){
+				String[] elements = line.split("|");
+				var ticket = new Ticket();
+				ticket.setId(Integer.parseInt(elements[1]));
+				for (int i = 2; i<elements.length;i++) {
+					ticket.fromData(elements[i]);
+					purchases.add(ticket);
+				}
+			}
+			reader.close();
+		}catch(IOException e) {
+			e.getStackTrace();
+		}
+	}
+	
+	public void updateTickets(String ticketsPath) {
+		
+		try {
+			var writer = new BufferedWriter(new FileWriter(ticketsPath));
+			for(Ticket ticket : purchases) {
+				writer.write(ticket.toData());
+				writer.newLine();
+			}
+			writer.close();
 		}catch(IOException e) {
 			e.getStackTrace();
 		}
