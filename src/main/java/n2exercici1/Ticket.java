@@ -2,7 +2,7 @@ package n2exercici1;
 
 import java.util.*;
 
-public class Ticket implements Persistent{
+public class Ticket{
 
 	//---ATTRIBUTES---
 	private List<Product> items;
@@ -62,36 +62,5 @@ public class Ticket implements Persistent{
 	
 	public void updateValue() {
 		this.value = getItemsValue();
-	}
-
-	//---PERSISTENCE---
-	@Override
-	public String toData() {
-							
-		String data = "Ticket,"+id;
-		for(Product item : items) {
-			data += ","+item.toData();
-		}
-		
-		return data;
-	}
-
-	@Override
-	public void fromData(String data) {
-
-		String[] product = data.split(";");
-		if(product[0].equals("Tree")) {
-			var tree = new Tree();
-			tree.fromData(data);
-			items.add(tree);
-		}else if(product[0].equals("Flower")){
-			var flower = new Flower();
-			flower.fromData(data);
-			items.add(flower);
-		}else if(product[0].equals("Decoration")){
-			var deco = new Decoration();
-			deco.fromData(data);
-			items.add(deco);
-		}
 	}
 }

@@ -107,16 +107,4 @@ public class Stock {
 	}
 	
 	//PERSISTENCE
-	private void updateFile() {
-		try {
-			var writer = new BufferedWriter(new FileWriter(filePath));
-			for(Product product : products) {
-				writer.write(product.toData());
-				writer.newLine();
-			}
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 }

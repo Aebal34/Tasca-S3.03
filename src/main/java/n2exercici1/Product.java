@@ -1,6 +1,6 @@
 package n2exercici1;
 
-public class Product implements Persistent{
+public class Product{
 
 	//---ATTRIBUTES---
 	protected double price;
@@ -8,10 +8,6 @@ public class Product implements Persistent{
 	protected int ammount;
 	
 	//---CONSTRUCTOR---
-	public Product(double price, int ammount) {
-		this.price = price;
-		this.ammount = ammount;
-	}
 	public Product() {
 		
 	}
@@ -48,15 +44,5 @@ public class Product implements Persistent{
 	
 	public void decreaseAmmount(int ammount) {
 		this.ammount -= ammount;
-	}
-	@Override
-	public String toData() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public void fromData(String data) {
-		// TODO Auto-generated method stub
-		
 	}
 }
