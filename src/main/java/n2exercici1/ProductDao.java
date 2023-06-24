@@ -6,7 +6,7 @@ import java.sql.*;
 public class ProductDao implements Dao<Product>{
 
 	//ATTRIBUTES
-	private List<Product> products = new ArrayList<>();
+	private Set<Product> products = new HashSet<>();
 	private String userName;
 	private String password;
 	private String url;
@@ -17,6 +17,10 @@ public class ProductDao implements Dao<Product>{
 		this.userName = userName;
 		this.password = password;
 		this.url = url;
+	}
+	
+	public Set<Product> getProducts() {
+		return products;
 	}
 	
 	//PERSISTENCE
@@ -32,7 +36,7 @@ public class ProductDao implements Dao<Product>{
 	}
 
 	@Override
-	public List<Product> getAll() {
+	public Set<Product> getAll() {
 		//We get the information needed to create an object of the pertinent class to later save it on the list
 			try {
 				connect();
@@ -93,29 +97,50 @@ public class ProductDao implements Dao<Product>{
 	public void update(Product product, String[] parameters) { //Parameters should be Price, Amount, Special_Characteristic
 		try {
 			connect();
-			Statement statement = connection.createStatement();
+			String query = "";
 			int rowsAffected = 0;
 			for(int i = 0; i < parameters.length; i++) {
 				if(parameters[i] != null) {
+					String id = product.getId();
 					switch(i) {
 						case 0:
-							rowsAffected += statement.executeUpdate("UPDATE Products SET price="+parameters[i]
-																	+" WHERE id="+product.getId()+";");
+							query = "UPDATE Products SET price=? WHERE id =?;";
+							try(PreparedStatement statement = connection.prepareStatement(query)){
+								statement.setFloat(1, Float.parseFloat(parameters[i]));
+								statement.setString(2, id);
+								rowsAffected += statement.executeUpdate();
+							}
 							break;
 						case 1:
-							rowsAffected += statement.executeUpdate("UPDATE Products SET amount="+parameters[i]
-																	+" WHERE id="+product.getId()+";");
+							query = "UPDATE Products SET amount=? WHERE id =?;";
+							try(PreparedStatement statement = connection.prepareStatement(query)){
+								statement.setInt(1, Integer.parseInt(parameters[i]));
+								statement.setString(2, id);
+								rowsAffected += statement.executeUpdate();
+							}
 							break;
 						case 2:
 							if(product instanceof Tree) {
-								rowsAffected += statement.executeUpdate("UPDATE Trees SET height="+Double.parseDouble(parameters[i])
-																		+ "WHERE id="+product.getId()+";");
+								query = "UPDATE Trees SET height=? WHERE id =?;";
+								try(PreparedStatement statement = connection.prepareStatement(query)){
+									statement.setFloat(1, Float.parseFloat(parameters[i]));
+									statement.setString(2, id);
+									rowsAffected += statement.executeUpdate();
+								}
 							}else if(product instanceof Flower) {
-								rowsAffected += statement.executeUpdate("UPDATE Flowers SET color="+parameters[i]
-																		+ "WHERE id="+product.getId()+";");
+								query = "UPDATE Flowers SET color=? WHERE id =?;";
+								try(PreparedStatement statement = connection.prepareStatement(query)){
+									statement.setString(1, parameters[i]);
+									statement.setString(2, id);
+									rowsAffected += statement.executeUpdate();
+								}
 							}else if(product instanceof Decoration) {
-								rowsAffected += statement.executeUpdate("UPDATE Decorations SET material="+parameters[i]
-																		+ "WHERE id="+product.getId()+";");
+								query = "UPDATE Decorations SET material=? WHERE id =?;";
+								try(PreparedStatement statement = connection.prepareStatement(query)){
+									statement.setString(1, parameters[i]);
+									statement.setString(2, id);
+									rowsAffected += statement.executeUpdate();
+								}
 							}
 							break;
 					}
@@ -179,39 +204,34 @@ public class ProductDao implements Dao<Product>{
 	public void delete(Product product) {
 		try {
 			connect();
-			Statement statement = connection.createStatement();
-			int rowsAffected = statement.executeUpdate("DELETE FROM Products WHERE id="+product.getId()+";");
+			String query = "DELETE FROM Products WHERE id=?;";
+			int rowsAffected = 0;
+			try(PreparedStatement statement = connection.prepareStatement(query)){
+				statement.setString(1, product.getId());
+				rowsAffected += statement.executeUpdate();
+			}
 			if(product instanceof Tree) {
-				rowsAffected += statement.executeUpdate("DELETE FROM Trees WHERE id="+product.getId()+";");
+				query = "DELETE FROM Trees WHERE id=?;";
+				try(PreparedStatement statement = connection.prepareStatement(query)){
+					statement.setString(1, product.getId());
+					rowsAffected += statement.executeUpdate();
+				}
 			}else if(product instanceof Flower){
-				rowsAffected += statement.executeUpdate("DELETE FROM Flowers WHERE id="+product.getId()+";");	
+				query = "DELETE FROM Flowers WHERE id=?;";
+				try(PreparedStatement statement = connection.prepareStatement(query)){
+					statement.setString(1, product.getId());
+					rowsAffected += statement.executeUpdate();
+				}	
 			}else if(product instanceof Decoration) {
-				rowsAffected += statement.executeUpdate("DELETE FROM Decorations WHERE id="+product.getId()+";");
+				query = "DELETE FROM Decorations WHERE id=?;";
+				try(PreparedStatement statement = connection.prepareStatement(query)){
+					statement.setString(1, product.getId());
+					rowsAffected += statement.executeUpdate();
+				}
 			}
 			System.out.println(rowsAffected +" rows affected.");
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void test() {
-		try {
-			connect();
-			Statement st = connection.createStatement();
-			ResultSet rs = st.executeQuery("SELECT * FROM Products");
-			ResultSetMetaData metaData = rs.getMetaData();
-			int columnCount = metaData.getColumnCount();
-			while(rs.next()) {
-				for (int i = 1; i <= columnCount; i++) {
-			        String columnName = metaData.getColumnName(i);
-			        String value = rs.getString(i);
-			        System.out.println("Columna: " + columnName + ", Valor: " + value);
-			    }
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 	}
 }

@@ -19,6 +19,11 @@ public class Decoration extends Product{
 		count++;
 	}
 	
+	public Decoration(float price, int ammount, String id) {
+		super(price, ammount);
+		this.id = id;
+	}
+	
 	public Decoration() {
 		
 	}

@@ -16,7 +16,7 @@ public class App {
 		Stock botaniculaStock = botanicula.getStock();
 		
 		botaniculaStock.addProduct(new Tree(2.78f, 69.95f, 23));
-		botaniculaStock.addProduct(new Tree(0.54f, 29.95f, 44));
+		botaniculaStock.addProduct(new Tree(2.55f, 29.95f, 44));
 		botaniculaStock.addProduct(new Flower("Purple", 18.45f, 13));
 		botaniculaStock.addProduct(new Flower("White", 14.25f, 25));
 		botaniculaStock.addProduct(new Decoration("Wood", 129.99f, 22));
@@ -25,9 +25,9 @@ public class App {
 		botaniculaStock.printStock();
 		
 		//Remove diverse products from stock
-		botaniculaStock.removeProduct("T1", 1);
-		botaniculaStock.removeProduct("F2", 2);
-		botaniculaStock.removeProduct("D1", 2);
+		botaniculaStock.removeProduct("T1", 11);
+		botaniculaStock.removeProduct("F2", 30);
+		botaniculaStock.removeProduct("D1", 12);
 		
 		botanicula.getStock().printStock();
 		/*

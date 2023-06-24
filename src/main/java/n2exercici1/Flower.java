@@ -14,6 +14,11 @@ public class Flower extends Product{
 		count++;
 	}
 	
+	public Flower(float price, int ammount, String id) {
+		super(price, ammount);
+		this.id = id;
+	}
+	
 	public Flower() {
 	}
 

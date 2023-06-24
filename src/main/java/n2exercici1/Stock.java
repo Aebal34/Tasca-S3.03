@@ -6,7 +6,7 @@ import java.io.*;
 public class Stock {
 
 	//---ATTRIBUTES---
-	private List<Product> products= new ArrayList<Product>();
+	private Set<Product> products= new HashSet<Product>();
 	private float value;
 	private ProductDao productDao;
 	
@@ -23,7 +23,7 @@ public class Stock {
 		return value;
 	}
 	
-	public List<Product> getProducts(){
+	public Set<Product> getProducts(){
 		return products;
 	}
 	
@@ -76,7 +76,7 @@ public class Stock {
 			if((product.getAmount()-amount)>=1) {
 				value -= product.getPrice()*amount;
 				product.decreaseAmmount(amount);
-				String amountS = ""+(product.getAmount()-+amount);
+				String amountS = ""+product.getAmount();
 				productDao.update(product, new String[] {null, amountS, null});
 			}else {
 				value -= product.getPrice()*product.getAmount();

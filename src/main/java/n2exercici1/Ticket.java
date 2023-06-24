@@ -5,23 +5,23 @@ import java.util.*;
 public class Ticket{
 
 	//---ATTRIBUTES---
-	private List<Product> items;
+	private Set<Product> items;
 	private double value;
 	private int id;
 	private static int count = 1;
-	private Florist florist;
+	private int floristId;
 	
 	//---CONSTRUCTORS---
-	public Ticket(List<Product> items, Florist florist) {
+	public Ticket(Set<Product> items, int floristId) {
 		this.items = items;
 		value = getItemsValue();
 		this.id = count;
 		count++;
-		this.florist=florist;
+		this.floristId=floristId;
 	}
 	
 	public Ticket() {
-		items = new ArrayList<Product>();
+		items = new HashSet<Product>();
 		value = 0;
 	}
 	
@@ -46,12 +46,12 @@ public class Ticket{
 		return value;
 	}
 	
-	public List<Product> getItems(){
+	public Set<Product> getItems(){
 		return items;
 	}
 	
-	public Florist getFlorist() {
-		return florist;
+	public int getFloristId() {
+		return floristId;
 	}
 	
 	//---DATA CONTROL---

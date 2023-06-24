@@ -4,7 +4,7 @@ import java.util.*;
 
 public interface Dao<T> {
 	
-	abstract List<T> getAll();
+	abstract Set<T> getAll();
 	
 	abstract void update(T t, String[] parameters);
 	

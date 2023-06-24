@@ -1,5 +1,7 @@
 package n2exercici1;
 
+import java.util.Objects;
+
 public abstract class Product{
 
 	//---ATTRIBUTES---

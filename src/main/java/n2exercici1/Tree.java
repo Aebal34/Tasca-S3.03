@@ -1,5 +1,7 @@
 package n2exercici1;
 
+import java.util.Objects;
+
 public class Tree extends Product{
 
 	//---ATTRIBUTES---
@@ -14,6 +16,11 @@ public class Tree extends Product{
 		count++;
 	}
 
+	public Tree(float price, int ammount, String id) {
+		super(price, ammount);
+		this.id = id;
+	}
+	
 	public Tree() {
 		
 	}
@@ -27,6 +34,24 @@ public class Tree extends Product{
 		this.height = height;
 	}
 	
+	//Override HashCode and Equals to avoid having the same Trees duplicated
+	@Override
+	public int hashCode() {
+		return Objects.hash(height);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Tree other = (Tree) obj;
+		return Float.floatToIntBits(height) == Float.floatToIntBits(other.height);
+	}
+
 	//---VIEW---
 	@Override
 	public String toString() {

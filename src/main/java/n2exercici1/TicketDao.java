@@ -1,17 +1,12 @@
 package n2exercici1;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
 
 public class TicketDao implements Dao<Ticket>{
 
 	//ATTRIBUTES
-	private List<Ticket> tickets = new ArrayList<>();
+	private Set<Ticket> tickets = new HashSet<>();
 	private String userName;
 	private String password;
 	private String url;
@@ -36,64 +31,57 @@ public class TicketDao implements Dao<Ticket>{
 		connection = DriverManager.getConnection(url, userName, password);
 	}
 	
-	public List<Product> getTicket(int id) throws SQLException {
-		var items = new ArrayList<Product>();
+	public Set<Product> getTicket(int id) throws SQLException {
+		var items = new HashSet<Product>();
 		
 		Statement statement = connection.createStatement();
-		ResultSet result = statement.executeQuery("SELECT P.* FROM Purchases P WHERE ticketId"+id+";");
+		ResultSet result = statement.executeQuery("SELECT P.* FROM Purchases P WHERE ticketId="+id+";");
 		
 		while(result.next()) {
-			String productId = result.getString(0);
-			
+			String productId = result.getString("productId");
+			int amount = result.getInt("amount");
+			float price = result.getFloat("price");
+			if(productId.charAt(0)=='T') {
+				items.add(new Tree(price, amount, productId));
+			}else if(productId.charAt(0)=='F') {
+				items.add(new Flower(price, amount, productId));
+			}else if(productId.charAt(0)=='D') {
+				items.add(new Decoration(price, amount, productId));
+			}
 		}
 		
 		return items;
 	}
 	
 	@Override
-	public List getAll() {
+	public Set<Ticket> getAll() {
 		try {
 			connect();
 			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery("SELECT P.id, P.price, P.amount, "
-														+"CASE "
-														+ "WHEN T.id IS NOT NULL THEN T.height "
-														+ "WHEN F.id IS NOT NULL THEN F.color "
-														+ "WHEN D.id IS NOT NULL THEN D.material "
-														+ "ELSE NULL END AS specific_characteristic "
-														+ "FROM Products P "
-														+ "LEFT JOIN Trees T ON P.id = T.id "
-														+ "LEFT JOIN Flowers F ON P.id = F.id "
-														+ "LEFT JOIN Decorations D ON P.id = D.id;");
-			//Loop through each result of the query
+			ResultSet result = statement.executeQuery("SELECT P.productId, P.ticketId, P.amount, P.price "
+														+ "FROM Purchases P "
+														+ "LEFT JOIN Tickets T ON P.ticketId = T.id;");
+			//Loop through each result of the query to find different tickets and it's items
+			int previousId = 1;
 			while (result.next()) {
-				String id = result.getString("P.id");
-				double price = result.getDouble("P.price");
-				int amount = result.getInt("P.amount");
-				boolean productExists = false;
-				//For each product that exists but the amount is different, we update the amount in the List
-				for(Product product : products) { 
-					if(id.equals(product.getId())) {
-						productExists = true;
-						if(product.getAmount()!=amount) {
-							product.setAmount(amount);
-						}
-					}
+				int id = result.getInt("P.ticketId");  
+				if(id != previousId) {
+					tickets.add(new Ticket(getTicket(id), result.getInt("T.floristId")));
 				}
+				previousId = id;
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	return tickets;
-}
+		return tickets;
+	}
 
 	@Override
 	public void save(Ticket ticket) {
 		try {
 			connect();
-			//Instantiate statement to work with queries
-			Statement statement = connection.createStatement();
+			String query = "INSERT INTO Purchases VALUES (?,?,?,?);";
+			PreparedStatement statement = connection.prepareStatement(query);
 			int rowsAffected = 0;
 			for(Product product : ticket.getItems()) {
 				rowsAffected += statement.executeUpdate("INSERT INTO Purchases VALUES ("
