@@ -8,7 +8,7 @@ public class App {
 		String url = "jdbc:mysql://localhost:3306/florists";
 		String userName = "root";
 		String password = "9595";
-		Florist botanicula = new Florist("Bonaticula", new Stock(new ProductDao(url, userName, password)));
+		Florist botanicula = new Florist("Botanicula", new Stock(new ProductDao(url, userName, password)), new TicketDao(url, userName, password));
 		
 		//Instantiate Stock and add 2 trees, 2 flowers and 2 decorations
 		
@@ -30,30 +30,17 @@ public class App {
 		botaniculaStock.removeProduct("D1", 12);
 		
 		botanicula.getStock().printStock();
-		/*
-		//Instantiate a cart to buy items
-		var cart = new ShoppingCart();
 		
-		//We add the items we want to buy
-		
-		cart.addItem("D2", 3, botaniculaStock);
-		cart.addItem("F1", 2, botaniculaStock);
-		cart.addItem("T2", 1, botaniculaStock);
-		
-		//And now we create a ticket for that shopping cart
-		botanicula.purchase(cart);
+		//We purchase the items we want
+		//Every time we buy a product, it's added and substracted to the adequate tables on MySql
+		botanicula.purchase("D2", 3);
+		botanicula.purchase("F1", 2);
+		botanicula.purchase("T2", 1);
 		
 		botanicula.getStock().printStock();
-		
-		//We save purchases of the day
-		botanicula.saveTickets();
-		
-		//We load them again
-		//botanicula.loadTickets(ticketsPath);
-		
-		botanicula.printTickets();
+
 		
 		//And we look at all the money we've won
-		botanicula.printTotalSales();*/
+		botanicula.printTotalSales();
 	}
 }

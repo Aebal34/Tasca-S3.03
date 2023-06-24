@@ -33,8 +33,9 @@ public class Florist {
 	}
 	
 	//---FUNCTIONALITY---
-	public void purchase(Product product, int amount) {
+	public void purchase(String id, int amount) {
 		var items = new HashSet<Product>();
+		var product = stock.getProduct(id);
 		for(Product item : stock.getProducts()) {
 			if(item.equals(product)) {
 				//Add item to "shopping cart"
