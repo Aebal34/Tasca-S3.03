@@ -9,13 +9,15 @@ public class Ticket{
 	private double value;
 	private int id;
 	private static int count = 1;
+	private Florist florist;
 	
 	//---CONSTRUCTORS---
-	public Ticket(List<Product> items) {
+	public Ticket(List<Product> items, Florist florist) {
 		this.items = items;
 		value = getItemsValue();
 		this.id = count;
 		count++;
+		this.florist=florist;
 	}
 	
 	public Ticket() {
@@ -36,8 +38,20 @@ public class Ticket{
 		this.id = id;
 	}
 	
+	public int getId() {
+		return id;
+	}
+	
 	public double getValue() {
 		return value;
+	}
+	
+	public List<Product> getItems(){
+		return items;
+	}
+	
+	public Florist getFlorist() {
+		return florist;
 	}
 	
 	//---DATA CONTROL---

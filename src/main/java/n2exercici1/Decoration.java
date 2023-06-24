@@ -1,13 +1,13 @@
 package n2exercici1;
 
-public class Decoration extends Product implements Persistent{
+public class Decoration extends Product{
 
 	//---ATTRIBUTES---
 	private static int count = 1;
 	private String material;
 	
 	//---CONSTRUCTORS---
-	public Decoration(String material, double price, int ammount) {
+	public Decoration(String material, float price, int ammount) {
 		super(price, ammount);
 		if(material.toUpperCase().equals("WOOD") || material.toUpperCase().equals("METAL")) {
 			this.material = material;
@@ -37,23 +37,9 @@ public class Decoration extends Product implements Persistent{
 		return material;
 	}
 
-	//---PERSISTENCE---
-	@Override
-	public String toData() {
-		return "Decoration;"+material+";"+price+";"+ammount+";"+id;
-	}
-
-	@Override
-	public void fromData(String data) {
-		String[] attributes = data.split(";");
-		this.material = attributes[1];
-		this.price = Double.parseDouble(attributes[2]);
-		this.ammount = Integer.parseInt(attributes[3]);
-	}
-	
-	//---DATA CONTROL---
+	//---VIEW---
 	@Override
 	public String toString() {
-		return "Decoration material: " + material + ", price:" + price+", ammount:"+ammount;
+		return "Decoration material: " + material + ", price:" + price+", ammount:"+amount;
 	}
 }

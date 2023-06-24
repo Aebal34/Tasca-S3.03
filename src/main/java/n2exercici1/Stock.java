@@ -67,21 +67,23 @@ public class Stock {
 	public void addProduct(Product product) {
 		products.add(product);
 		value += product.getPrice()*product.getAmount();
-		updateFile();
+		productDao.save(product);
 	}
 	
-	public void removeProduct(String id, int ammount) {
+	public void removeProduct(String id, int amount) {
+		var product = getProduct(id);
 		if(getProduct(id) != null) {
-			var product = getProduct(id);
-			if((product.getAmount()-ammount)>=1) {
-				value -= product.getPrice()*ammount;
-				product.decreaseAmmount(ammount);
+			if((product.getAmount()-amount)>=1) {
+				value -= product.getPrice()*amount;
+				product.decreaseAmmount(amount);
+				String amountS = ""+amount;
+				productDao.update(product, new String[] {null, amountS, null});
 			}else {
 				value -= product.getPrice()*product.getAmount();
 				products.remove(product);
+				productDao.delete(product);
 			}
 		}
-		updateFile();
 	}
 	
 	public void updateValue() {

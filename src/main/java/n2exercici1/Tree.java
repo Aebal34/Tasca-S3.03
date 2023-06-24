@@ -4,10 +4,10 @@ public class Tree extends Product{
 
 	//---ATTRIBUTES---
 	private static int count = 1;
-	private double height;
+	private float height;
 	
 	//---CONSTRUCTORS---
-	public Tree(double height, double price, int ammount) {
+	public Tree(float height, float price, int ammount) {
 		super(price, ammount);
 		this.height = height;
 		this.id = "T"+count;
@@ -19,15 +19,15 @@ public class Tree extends Product{
 	}
 	
 	//---GETTERS & SETTERS
-	public double getHeight() {
+	public float getHeight() {
 		return height;
 	}
 
-	public void setHeight(double height) {
+	public void setHeight(float height) {
 		this.height = height;
 	}
 	
-	//---DATA CONTROL---
+	//---VIEW---
 	@Override
 	public String toString() {
 		return "Tree height: " + height + ", price:" + price+", ammount:"+amount;

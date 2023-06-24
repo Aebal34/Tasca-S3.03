@@ -3,12 +3,12 @@ package n2exercici1;
 public abstract class Product{
 
 	//---ATTRIBUTES---
-	protected double price;
+	protected float price;
 	protected String id;
 	protected int amount;
 	
 	//---CONSTRUCTOR---
-	public Product(double price, int amount) {
+	public Product(float price, int amount) {
 		this.price = price;
 		this.amount = amount;
 	}

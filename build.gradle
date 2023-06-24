@@ -1,6 +1,11 @@
 plugins{
 	id 'java'
 }
-dependencies{
-	runtimeOnly 'com.microsoft.sqlserver:mssql-jdbc'
+repositories {
+   // Maven Central repository
+   mavenCentral()
+}
+dependencies {
+    // Get the MySQL JDBC driver
+    implementation 'mysql:mysql-connector-java:8.0.33'
 }

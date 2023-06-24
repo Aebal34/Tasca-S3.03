@@ -43,13 +43,14 @@ public class ProductDao implements Dao<Product>{
 																	+ "WHEN F.id IS NOT NULL THEN F.color "
 																	+ "WHEN D.id IS NOT NULL THEN D.material "
 																	+ "ELSE NULL END AS specific_characteristic "
-																	+ "FROM Products P "
-																	+ "LEFT JOIN Trees T ON P.id = T.id "
-																	+ "LEFT JOIN Flowers F ON P.id = F.id "
-																	+ "LEFT JOIN Decorations D ON P.id = D.id;");
+																	+ "FROM Products AS P "
+																	+ "LEFT JOIN Trees AS T ON P.id = T.id "
+																	+ "LEFT JOIN Flowers AS F ON P.id = F.id "
+																	+ "LEFT JOIN Decorations AS D ON P.id = D.id;");
 				//Loop through each result of the query
 				while (result.next()) {
 					String id = result.getString("P.id");
+					System.out.println(id);
 					double price = result.getDouble("P.price");
 					int amount = result.getInt("P.amount");
 					boolean productExists = false;
@@ -65,7 +66,7 @@ public class ProductDao implements Dao<Product>{
 					if(!productExists) {
 						switch(id.charAt(0)) {
 							case 'T':
-								var tree = new Tree(result.getDouble("T.height"), price, amount);
+								var tree = new Tree(result.getFloat("T.height"), price, amount);
 								tree.setId(id);
 								products.add(tree);
 								break;
@@ -177,7 +178,26 @@ public class ProductDao implements Dao<Product>{
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void test() {
+		try {
+			connect();
+			Statement st = connection.createStatement();
+			ResultSet rs = st.executeQuery("SELECT * FROM Products");
+			ResultSetMetaData metaData = rs.getMetaData();
+			int columnCount = metaData.getColumnCount();
+			while(rs.next()) {
+				for (int i = 1; i <= columnCount; i++) {
+			        String columnName = metaData.getColumnName(i);
+			        String value = rs.getString(i);
+			        System.out.println("Columna: " + columnName + ", Valor: " + value);
+			    }
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
-	
 }
