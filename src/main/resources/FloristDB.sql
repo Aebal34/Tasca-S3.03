@@ -1,36 +1,32 @@
 CREATE TABLE Trees(
-	id INT REFERENCES Products(id),
-    productType CHARACTER REFERENCES Products(productType),
-    height DOUBLE,
-    PRIMARY KEY (ProductType, id),
-	CONSTRAINT productType_CK CHECK(productType('T')));
+	id VARCHAR(4) PRIMARY KEY REFERENCES Products(id),
+    height DOUBLE
+    );
 CREATE TABLE Flowers(
-	id INT REFERENCES Products(id),
-    productType CHARACTER REFERENCES Products(productType),
-    color VARCHAR(25),
-    PRIMARY KEY (ProductType, id),	
-	CONSTRAINT productType_CK CHECK(productType('F')));
+	id VARCHAR(4) PRIMARY KEY REFERENCES Products(id),
+    color VARCHAR(25)
+    );
 CREATE TABLE Decorations(
-	id INT REFERENCES Products(id),
+	id VARCHAR(4) PRIMARY KEY REFERENCES Products(id),
     material VARCHAR(10),
-    productType CHARACTER REFERENCES Products(productType),
-    PRIMARY KEY (ProductType, id),
-    CONSTRAINT material_CK CHECK(material("Wood", "Metal")),
-     CONSTRAINT productType_CK CHECK(productType('D')));
-CREATE TABLE Products(
-	id INT AUTO_INCREMENT PRIMARY KEY,
+    CONSTRAINT material_CK CHECK(material("Wood", "Metal"))
+    );
+    CREATE TABLE Products(
+    id VARCHAR(4) PRIMARY KEY,
     price DOUBLE,
-    ammount INT,
-	productType CHARACTER
-    CONSTRAINT productType_CK CHECK(productType('T','F','D')));
+    amount INT
+    );
 CREATE TABLE Purchases(
 	productId INT PRIMARY KEY REFERENCES Products(id),
     ticketID INT REFERENCES Tickets(id),
-    ammount INT);
+    amount INT
+    );
 CREATE TABLE Tickets(
-	id INT AUTO_INCREMENT PRIMARY KEY,
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
     totalPrice DOUBLE,
-    floristId INT REFERENCES Florists(id));
+    floristId INT REFERENCES Florists(id)
+    );
 CREATE TABLE Florists(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-    floristName VARCHAR(75));
+    floristName VARCHAR(75)
+    );

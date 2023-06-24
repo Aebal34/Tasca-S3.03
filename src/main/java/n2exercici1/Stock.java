@@ -6,15 +6,16 @@ import java.io.*;
 public class Stock {
 
 	//---ATTRIBUTES---
-	private List<Product> products;
+	private List<Product> products= new ArrayList<Product>();
 	private double value;
-	private String filePath;
+	private ProductDao productDao;
 	
 	//---CONSTRUCTOR---
-	public Stock(String filePath) {
-		this.products = new ArrayList<Product>();
+	public Stock(ProductDao productDao) {
 		value = 0;
-		this.filePath = filePath;
+		this.productDao = productDao;
+		this.products = productDao.getAll();
+		updateValue();
 	}
 	
 	//---GETTERS & SETTERS---
@@ -65,18 +66,18 @@ public class Stock {
 	//---DATA CONTROL---
 	public void addProduct(Product product) {
 		products.add(product);
-		value += product.getPrice()*product.getAmmount();
+		value += product.getPrice()*product.getAmount();
 		updateFile();
 	}
 	
 	public void removeProduct(String id, int ammount) {
 		if(getProduct(id) != null) {
 			var product = getProduct(id);
-			if((product.getAmmount()-ammount)>=1) {
+			if((product.getAmount()-ammount)>=1) {
 				value -= product.getPrice()*ammount;
 				product.decreaseAmmount(ammount);
 			}else {
-				value -= product.getPrice()*product.getAmmount();
+				value -= product.getPrice()*product.getAmount();
 				products.remove(product);
 			}
 		}
@@ -86,7 +87,7 @@ public class Stock {
 	public void updateValue() {
 		this.value = 0;
 		for(Product product : products) {
-			this.value += product.getPrice()*product.getAmmount();
+			this.value += product.getPrice()*product.getAmount();
 		}
 	}
 	

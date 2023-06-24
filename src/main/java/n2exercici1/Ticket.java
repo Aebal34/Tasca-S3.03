@@ -27,7 +27,7 @@ public class Ticket{
 	private double getItemsValue() {
 		double value = 0;
 		for(Product item : this.items) {
-			value += item.getPrice()*item.getAmmount();
+			value += item.getPrice()*item.getAmount();
 		}
 		return value;
 	}
@@ -43,9 +43,9 @@ public class Ticket{
 	//---DATA CONTROL---
 	public void addItem(String id, int ammount, Stock stock) {
 		var item = stock.getProduct(id);
-		if(ammount <= item.getAmmount()){
+		if(ammount <= item.getAmount()){
 			stock.removeProduct(id, ammount);
-			item.setAmmount(ammount);
+			item.setAmount(ammount);
 			items.add(item);
 		}
 		value = getItemsValue();

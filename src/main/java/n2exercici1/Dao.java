@@ -3,8 +3,6 @@ package n2exercici1;
 import java.util.*;
 
 public interface Dao<T> {
-
-	abstract Optional<T> get(String id);
 	
 	abstract List<T> getAll();
 	

@@ -1,13 +1,18 @@
 package n2exercici1;
 
-public class Product{
+public abstract class Product{
 
 	//---ATTRIBUTES---
 	protected double price;
 	protected String id;
-	protected int ammount;
+	protected int amount;
 	
 	//---CONSTRUCTOR---
+	public Product(double price, int amount) {
+		this.price = price;
+		this.amount = amount;
+	}
+	
 	public Product() {
 		
 	}
@@ -21,28 +26,24 @@ public class Product{
 		return id;
 	}
 	
-	public int getAmmount() {
-		return ammount;
+	public int getAmount() {
+		return amount;
 	}
 	
-	public void setAmmount(int ammount) {
-		this.ammount = ammount;
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 	//---DATA CONTROL---
-	public void increaseAmmount() {
-		ammount++;
+	public void increaseAmount(int amount) {
+		this.amount += amount;
 	}
 	
-	public void increaseAmmount(int ammount) {
-		this.ammount += ammount;
-	}
-	
-	public void decreaseAmmount() {
-		ammount--;
-	}
-	
-	public void decreaseAmmount(int ammount) {
-		this.ammount -= ammount;
+	public void decreaseAmmount(int amount) {
+		this.amount -= amount;
 	}
 }
