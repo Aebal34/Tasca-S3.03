@@ -5,32 +5,33 @@ import java.util.*;
 
 public class TicketDao implements Dao<Ticket>{
 
-	//ATTRIBUTES
+	//---ATTRIBUTES---
 	private Set<Ticket> tickets = new HashSet<>();
 	private String userName;
 	private String password;
 	private String url;
 	Connection connection = null;
 	
-	//CONSTRUCTOR
+	//---CONSTRUCTOR---
 	public TicketDao(String url, String userName, String password) {
 		this.userName = userName;
 		this.password = password;
 		this.url = url;
 	}
 	
-	//PERSISTENCE
-	public void connect() throws SQLException {
-		try {
-			//Load the driver so it can be loaded dynamically though static block
-			Class.forName("com.mysql.cj.jdbc.Driver"); 
-		}catch(ClassNotFoundException e) {
-			e.getCause();
+	//---LOGIC/VALIDATION---
+		public void connect() throws SQLException {
+			try {
+				//Load the driver so it can be loaded dynamically though static block
+				Class.forName("com.mysql.cj.jdbc.Driver"); 
+			}catch(ClassNotFoundException e) {
+				e.getCause();
+			}
+			//We get the connection with the database
+			connection = DriverManager.getConnection(url, userName, password);
 		}
-		//We get the connection with the database
-		connection = DriverManager.getConnection(url, userName, password);
-	}
-	
+		
+	//---PERSISTENCE---
 	public Set<Product> getTicket(int id) throws SQLException {
 		var items = new HashSet<Product>();
 		
@@ -49,7 +50,6 @@ public class TicketDao implements Dao<Ticket>{
 				items.add(new Decoration(price, amount, productId));
 			}
 		}
-		
 		return items;
 	}
 	
@@ -81,18 +81,22 @@ public class TicketDao implements Dao<Ticket>{
 		try {
 			connect();
 			String query = "INSERT INTO Purchases VALUES (?,?,?,?);";
-			PreparedStatement statement = connection.prepareStatement(query);
 			int rowsAffected = 0;
-			for(Product product : ticket.getItems()) {
-				rowsAffected += statement.executeUpdate("INSERT INTO Purchases VALUES ("
-														+product.getId()+", "
-														+ticket.getId()+", "
-														+product.getAmount()+");");
+			try(PreparedStatement statement = connection.prepareStatement(query)){
+				for(Product product : ticket.getItems()) {
+					statement.setString(1, product.getId());
+					statement.setInt(2, ticket.getId());
+					statement.setInt(3, product.getAmount());
+					statement.setFloat(4, product.getPrice());
+					rowsAffected += statement.executeUpdate();
+				}
 			}
-			rowsAffected += statement.executeUpdate("INSERT INTO Tickets VALUES ("
-													+ticket.getId()+", "
-													+ticket.getValue()+", "
-													+ticket.getFlorist().getId()+");");
+			query = "INSERT INTO Tickets VALUES (?,?,?);";
+			try(PreparedStatement statement = connection.prepareStatement(query)){
+				statement.setInt(1, ticket.getId());
+				statement.setFloat(2, ticket.getValue());
+				statement.setInt(3, ticket.getFloristId());
+			}
 			System.out.println(rowsAffected +" rows affected.");
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -101,14 +105,24 @@ public class TicketDao implements Dao<Ticket>{
 
 	@Override
 	public void delete(Ticket ticket) {
-		// TODO Auto-generated method stub
+		try {
+			connect();
+			Statement statement = connection.createStatement();
+			int rowsAffected = statement.executeUpdate("DELETE FROM Purchases P WHERE P.ticketId="
+														+ticket.getId()+";");
+			rowsAffected += statement.executeUpdate("DELETE FROM Tickets T WHERE T.id="
+														+ticket.getId()+";");
+			System.out.println(rowsAffected +" rows affected.");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
 	@Override
 	public void update(Ticket t, String[] parameters) {
-		// TODO Auto-generated method stub
+		// Not necessary
 		
 	}
-
 }

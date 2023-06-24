@@ -5,14 +5,14 @@ import java.sql.*;
 
 public class ProductDao implements Dao<Product>{
 
-	//ATTRIBUTES
+	//---ATTRIBUTES---
 	private Set<Product> products = new HashSet<>();
 	private String userName;
 	private String password;
 	private String url;
 	Connection connection = null;
 	
-	//CONSTRUCTOR
+	//---CONSTRUCTOR---
 	public ProductDao(String url, String userName, String password) {
 		this.userName = userName;
 		this.password = password;
@@ -23,7 +23,7 @@ public class ProductDao implements Dao<Product>{
 		return products;
 	}
 	
-	//PERSISTENCE
+	//---LOGIC/VALIDATION---
 	public void connect() throws SQLException {
 		try {
 			//Load the driver so it can be loaded dynamically though static block
@@ -35,6 +35,7 @@ public class ProductDao implements Dao<Product>{
 		connection = DriverManager.getConnection(url, userName, password);
 	}
 
+	//---PERSISTENCE---
 	@Override
 	public Set<Product> getAll() {
 		//We get the information needed to create an object of the pertinent class to later save it on the list

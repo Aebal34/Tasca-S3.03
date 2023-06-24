@@ -63,7 +63,7 @@ public class Stock {
 						.orElse(null);
 	}
 	
-	//---DATA CONTROL---
+	//---LOGIC/VALIDATION---
 	public void addProduct(Product product) {
 		products.add(product);
 		value += product.getPrice()*product.getAmount();
@@ -93,6 +93,7 @@ public class Stock {
 		}
 	}
 	
+	//---VIEW---
 	public void printStock() {
 		
 		  System.out.println(" __________________________________________"+"\n");

@@ -6,7 +6,7 @@ public class Ticket{
 
 	//---ATTRIBUTES---
 	private Set<Product> items;
-	private double value;
+	private float value;
 	private int id;
 	private static int count = 1;
 	private int floristId;
@@ -26,8 +26,8 @@ public class Ticket{
 	}
 	
 	//---GETTERS & SETTERS---
-	private double getItemsValue() {
-		double value = 0;
+	private float getItemsValue() {
+		float value = 0;
 		for(Product item : this.items) {
 			value += item.getPrice()*item.getAmount();
 		}
@@ -42,7 +42,7 @@ public class Ticket{
 		return id;
 	}
 	
-	public double getValue() {
+	public float getValue() {
 		return value;
 	}
 	
@@ -54,7 +54,24 @@ public class Ticket{
 		return floristId;
 	}
 	
-	//---DATA CONTROL---
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ticket other = (Ticket) obj;
+		return id == other.id;
+	}
+
+	//---LOGIC/VALIDATION---
 	public void addItem(String id, int ammount, Stock stock) {
 		var item = stock.getProduct(id);
 		if(ammount <= item.getAmount()){
@@ -65,6 +82,7 @@ public class Ticket{
 		value = getItemsValue();
 	}
 	
+	//---VIEW---
 	public void printTicket() {
 		
 		System.out.println("Ticket: "+id+" { "+"\n");
