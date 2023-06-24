@@ -36,7 +36,7 @@ public class App {
 		System.out.println("Flower getCount:" +Tree.getCount());
 		System.out.println("Decoration getCount:" +Tree.getCount());
 		
-		/*
+		
 		//We purchase the items we want
 		//Every time we buy a product, it's added and substracted to the adequate tables on MySql
 		botanicula.purchase("D2", 3);
@@ -49,6 +49,6 @@ public class App {
 		botanicula.printTickets();
 		
 		//And we look at all the money we've won
-		botanicula.printTotalSales();*/
+		botanicula.printTotalSales();
 	}
 }
