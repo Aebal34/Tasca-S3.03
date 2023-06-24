@@ -1,7 +1,6 @@
 package n2exercici1;
 
 import java.util.*;
-import java.io.*;
 
 public class Florist {
 
@@ -10,7 +9,7 @@ public class Florist {
 	private int id;
 	private String name;
 	private Stock stock;
-	private Set<Ticket> tickets;
+	private Set<Ticket> tickets= new HashSet<Ticket>();
 	private TicketDao ticketDao;
 	
 	//---CONSTRUCTOR---
@@ -18,8 +17,8 @@ public class Florist {
 		id = count;
 		this.name = name;
 		this.stock = stock;
-		tickets = new HashSet<Ticket>();
 		this.ticketDao = ticketDao;
+		tickets = ticketDao.getAll();
 		count++;
 	}
 	
@@ -38,18 +37,26 @@ public class Florist {
 		var product = stock.getProduct(id);
 		for(Product item : stock.getProducts()) {
 			if(item.equals(product)) {
-				//Add item to "shopping cart"
-				var purchasedItem = product;
-				purchasedItem.setAmount(amount);
-				items.add(purchasedItem);
-				//Remove items from stock
-				stock.removeProduct(product.getId(), amount);
+				//Add item to "shopping cart" making sure they are in stock
+				items.add(item);
 			}
 		}
-		//Add all items to set and to db
-		var ticket = new Ticket(items, this.id);
+		//Once we have the items selected, we add them to a created ticket
+		var ticket = new Ticket(this.id);
+		for(Product item : items) {
+			ticket.addItem(item.getId(), amount, stock);
+		}
+		//Add ticket to hashset and to db
 		tickets.add(ticket);
 		ticketDao.save(ticket);
+	}
+	
+	public void addItemToTicket(int ticketId, String productId, int amount) {
+		for(Ticket ticket: tickets) {
+			if(ticketId==ticket.getId()) {
+				ticket.addItem(productId, amount, stock);
+			}
+		}
 	}
 	
 	//---VIEW---
@@ -64,6 +71,6 @@ public class Florist {
 		for(Ticket ticket : tickets) {
 			finalAmmount += ticket.getValue();
 		}
-		System.out.println("The total ammount sold in this florist is: "+finalAmmount);
+		System.out.println("The total ammount sold in this florist is: "+Math.round(finalAmmount));
 	}
 }

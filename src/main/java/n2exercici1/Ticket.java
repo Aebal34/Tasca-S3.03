@@ -20,9 +20,12 @@ public class Ticket{
 		this.floristId=floristId;
 	}
 	
-	public Ticket() {
+	public Ticket(int floristId) {
 		items = new HashSet<Product>();
 		value = 0;
+		this.id = count;
+		count++;
+		this.floristId=floristId;
 	}
 	
 	//---GETTERS & SETTERS---
@@ -54,6 +57,10 @@ public class Ticket{
 		return floristId;
 	}
 	
+	public static int getCount() {
+		return count;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -73,7 +80,8 @@ public class Ticket{
 
 	//---LOGIC/VALIDATION---
 	public void addItem(String id, int ammount, Stock stock) {
-		var item = stock.getProduct(id);
+		Product item = new Product();
+		item = stock.getProduct(id);
 		if(ammount <= item.getAmount()){
 			stock.removeProduct(id, ammount);
 			item.setAmount(ammount);

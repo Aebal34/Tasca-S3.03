@@ -31,6 +31,10 @@ public class Flower extends Product{
 		this.color = color;
 	}
 	
+	public static int getCount() {
+		return count;
+	}
+	
 	//---VIEW---
 	@Override
 	public String toString() {

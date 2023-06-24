@@ -2,7 +2,7 @@ package n2exercici1;
 
 import java.util.Objects;
 
-public abstract class Product{
+public class Product{
 
 	//---ATTRIBUTES---
 	protected float price;
