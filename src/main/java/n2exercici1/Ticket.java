@@ -15,7 +15,6 @@ public class Ticket{
 	public Ticket(Set<Product> items, int floristId) {
 		this.items = items;
 		value = getItemsValue();
-		this.id = count;
 		count++;
 		this.floristId=floristId;
 	}
@@ -57,10 +56,6 @@ public class Ticket{
 		return floristId;
 	}
 	
-	public static int getCount() {
-		return count;
-	}
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -79,6 +74,7 @@ public class Ticket{
 	}
 
 	//---LOGIC/VALIDATION---
+
 	public void addItem(String id, int ammount, Stock stock) {
 		Product item = new Product();
 		item = stock.getProduct(id);

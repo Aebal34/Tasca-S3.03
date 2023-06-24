@@ -58,13 +58,14 @@ public class TicketDao implements Dao<Ticket>{
 		try {
 			connect();
 			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery("SELECT P.productId, P.ticketId, P.amount, P.price "
+			ResultSet result = statement.executeQuery("SELECT P.productId, P.ticketId, P.amount, P.price, T.floristId "
 														+ "FROM Purchases P "
 														+ "LEFT JOIN Tickets T ON P.ticketId = T.id;");
 			//Loop through each result of the query to find different tickets and it's items
 			while (result.next()) {
 				int id = result.getInt("P.ticketId");  
-				tickets.add(new Ticket(getTicket(id), result.getInt("T.floristId")));
+				Ticket ticket = new Ticket(getTicket(id), result.getInt("T.floristId"));
+				tickets.add(ticket);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -95,6 +96,7 @@ public class TicketDao implements Dao<Ticket>{
 				rowsAffected += statement.executeUpdate();
 			}
 			System.out.println(rowsAffected +" rows affected.");
+
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}

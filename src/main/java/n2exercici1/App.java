@@ -16,6 +16,9 @@ public class App {
 		Stock botaniculaStock = botanicula.getStock();
 		
 		botaniculaStock.addProduct(new Tree(2.78f, 69.95f, 23));
+		botanicula.purchase("T1", 12);
+		
+		/*botaniculaStock.addProduct(new Tree(2.78f, 69.95f, 23));
 		botaniculaStock.addProduct(new Tree(2.55f, 29.95f, 44));
 		botaniculaStock.addProduct(new Flower("Purple", 18.45f, 13));
 		botaniculaStock.addProduct(new Flower("White", 14.25f, 25));
@@ -31,12 +34,6 @@ public class App {
 		
 		botanicula.getStock().printStock();
 		
-		System.out.println("Ticket getCount:" +Ticket.getCount());
-		System.out.println("Tree getCount:" +Tree.getCount());
-		System.out.println("Flower getCount:" +Tree.getCount());
-		System.out.println("Decoration getCount:" +Tree.getCount());
-		
-		
 		//We purchase the items we want
 		//Every time we buy a product, it's added and substracted to the adequate tables on MySql
 		botanicula.purchase("D2", 3);
@@ -49,6 +46,6 @@ public class App {
 		botanicula.printTickets();
 		
 		//And we look at all the money we've won
-		botanicula.printTotalSales();
+		botanicula.printTotalSales();*/
 	}
 }
