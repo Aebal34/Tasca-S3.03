@@ -50,8 +50,7 @@ public class ProductDao implements Dao<Product>{
 				//Loop through each result of the query
 				while (result.next()) {
 					String id = result.getString("P.id");
-					System.out.println(id);
-					double price = result.getDouble("P.price");
+					float price = result.getFloat("P.price");
 					int amount = result.getInt("P.amount");
 					boolean productExists = false;
 					//For each product that exists but the amount is different, we update the amount in the List
@@ -66,17 +65,17 @@ public class ProductDao implements Dao<Product>{
 					if(!productExists) {
 						switch(id.charAt(0)) {
 							case 'T':
-								var tree = new Tree(result.getFloat("T.height"), price, amount);
+								var tree = new Tree(result.getFloat("specific_characteristic"), price, amount);
 								tree.setId(id);
 								products.add(tree);
 								break;
 							case 'F':
-								var flower = new Flower(result.getString("F.color"), price, amount);
+								var flower = new Flower(result.getString("specific_characteristic"), price, amount);
 								flower.setId(id);
 								products.add(flower);
 								break;
 							case 'D':
-								var decoration = new Decoration(result.getString("D.material"), price, amount);
+								var decoration = new Decoration(result.getString("specific_characteristic"), price, amount);
 								decoration.setId(id);
 								products.add(decoration);
 								break;
@@ -133,27 +132,42 @@ public class ProductDao implements Dao<Product>{
 	public void save(Product product) { //save product in database
 		try {
 			connect();
-			//Instantiate statement to work with queries
-			Statement statement = connection.createStatement();
-			//We save the amount of rows affected at inserting values into database
-			int rowsAffected = statement.executeUpdate("INSERT INTO Products VALUES ("
-														+product.getId()+", "
-														+product.getPrice()+", "
-														+product.getAmount()+");");
+			int rowsAffected = 0;
+			String query = "INSERT INTO Products VALUES (?, ?, ?)";
+			//Instantiate prepared statement to work with query, validating data type integrity
+			//We use try-with-resource to close automatically the statement once is used
+			try(PreparedStatement statement = connection.prepareStatement(query)){
+				statement.setString(1, product.getId());
+				statement.setFloat(2, product.getPrice());
+				statement.setInt(3, product.getAmount());
+				//We save the amount of rows affected at inserting values into database
+				rowsAffected += statement.executeUpdate();
+			}
 			//Depending on the kind of product we insert values on their tables as well
 			if(product instanceof Tree) {
 				var tree = (Tree)product;
-				rowsAffected += statement.executeUpdate("INSERT INTO Trees VALUES ("
-														 +tree.getId()+", "
-														 +tree.getHeight()+");");
+				query = "INSERT INTO Trees VALUES (?, ?)";
+				try(PreparedStatement statement = connection.prepareStatement(query)){
+					statement.setString(1, tree.getId());
+					statement.setFloat(2, tree.getHeight());
+					rowsAffected += statement.executeUpdate();
+				}
 			}else if(product instanceof Flower){
 				var flower = (Flower)product;
-				rowsAffected += statement.executeUpdate("INSERT INTO Flowers (color) VALUES ("
-														 +flower.getColor()+");");			
+				query = "INSERT INTO Flowers VALUES (?, ?)";
+				try(PreparedStatement statement = connection.prepareStatement(query)){
+					statement.setString(1, flower.getId());
+					statement.setString(2, flower.getColor());
+					rowsAffected += statement.executeUpdate();
+				}
 			}else if(product instanceof Decoration) {
 				var decoration = (Decoration)product;
-				rowsAffected += statement.executeUpdate("INSERT INTO Decorations (material) VALUES ("
-						 								 +decoration.getMaterial()+");");
+				query = "INSERT INTO Decorations VALUES (?, ?)";
+				try(PreparedStatement statement = connection.prepareStatement(query)){
+					statement.setString(1, decoration.getId());
+					statement.setString(2, decoration.getMaterial());
+					rowsAffected += statement.executeUpdate();
+				}
 			}
 			System.out.println(rowsAffected +" rows affected.");
 		}catch(SQLException e) {

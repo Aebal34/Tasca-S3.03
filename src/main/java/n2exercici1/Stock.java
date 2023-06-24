@@ -7,7 +7,7 @@ public class Stock {
 
 	//---ATTRIBUTES---
 	private List<Product> products= new ArrayList<Product>();
-	private double value;
+	private float value;
 	private ProductDao productDao;
 	
 	//---CONSTRUCTOR---
@@ -19,7 +19,7 @@ public class Stock {
 	}
 	
 	//---GETTERS & SETTERS---
-	public double getValue() {
+	public float getValue() {
 		return value;
 	}
 	
@@ -76,7 +76,7 @@ public class Stock {
 			if((product.getAmount()-amount)>=1) {
 				value -= product.getPrice()*amount;
 				product.decreaseAmmount(amount);
-				String amountS = ""+amount;
+				String amountS = ""+(product.getAmount()-+amount);
 				productDao.update(product, new String[] {null, amountS, null});
 			}else {
 				value -= product.getPrice()*product.getAmount();
@@ -108,6 +108,4 @@ public class Stock {
 		System.out.println(" __________________________________________");
 		System.out.println("Total stock value: "+value);
 	}
-	
-	//PERSISTENCE
 }

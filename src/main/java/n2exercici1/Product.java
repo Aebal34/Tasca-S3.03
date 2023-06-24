@@ -18,7 +18,7 @@ public abstract class Product{
 	}
 	
 	//---GETTERS & SETTERS---
-	public double getPrice() {
+	public float getPrice() {
 		return price;
 	}
 	

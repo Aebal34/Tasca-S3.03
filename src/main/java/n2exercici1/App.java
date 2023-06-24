@@ -15,16 +15,14 @@ public class App {
 		
 		Stock botaniculaStock = botanicula.getStock();
 		
-		var pd = new ProductDao(url, userName, password);
-		botaniculaStock.addProduct(new Tree(2.78, 69.95, 2));
-		/*botaniculaStock.addProduct(new Tree(0.54, 29.95, 1));
-		botaniculaStock.addProduct(new Flower("Purple", 18.45, 5));
-		botaniculaStock.addProduct(new Flower("White", 14.25, 3));
-		botaniculaStock.addProduct(new Decoration("Wood", 129.99, 2));
-		botaniculaStock.addProduct(new Decoration("Metal", 81.75, 4));
+		botaniculaStock.addProduct(new Tree(2.78f, 69.95f, 23));
+		botaniculaStock.addProduct(new Tree(0.54f, 29.95f, 44));
+		botaniculaStock.addProduct(new Flower("Purple", 18.45f, 13));
+		botaniculaStock.addProduct(new Flower("White", 14.25f, 25));
+		botaniculaStock.addProduct(new Decoration("Wood", 129.99f, 22));
+		botaniculaStock.addProduct(new Decoration("Metal", 81.75f, 9));
 		
 		botaniculaStock.printStock();
-		
 		
 		//Remove diverse products from stock
 		botaniculaStock.removeProduct("T1", 1);
@@ -32,7 +30,7 @@ public class App {
 		botaniculaStock.removeProduct("D1", 2);
 		
 		botanicula.getStock().printStock();
-		
+		/*
 		//Instantiate a cart to buy items
 		var cart = new ShoppingCart();
 		
