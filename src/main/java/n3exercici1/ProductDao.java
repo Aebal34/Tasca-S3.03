@@ -12,10 +12,11 @@ public class ProductDao implements Dao<Product>{
 
 	//---ATTRIBUTES---
 	private Set<Product> products = new HashSet<>();
+	MongoCollection<Document> collection = null;
 	
 	//---CONSTRUCTOR---
 	public ProductDao() {
-
+		
 	}
 	
 	//---GETTERS&SETTERS---
@@ -24,21 +25,17 @@ public class ProductDao implements Dao<Product>{
 	}
 	
 	//---PERSISTENCE---
-
 	private void connect() {
 		String uri = "mongodb+srv://admin:admin@mongodb.zf49r2c.mongodb.net/";
 		MongoClientURI clientUri = new MongoClientURI(uri);
 		MongoClient client = new MongoClient(clientUri);
 		
 		MongoDatabase mongoDatabase = client.getDatabase("MongoDB");
-		MongoCollection collection = mongoDatabase.getCollection("Florists");
+		collection = mongoDatabase.getCollection("Stock");
 		
-		Document doc = new Document("Type: ", "Tree");
-		doc.append("height", 2.95);
-		doc.append("price", 29.95);
-		doc.append("amount", 20);
-		doc.append("id", "T1");
+		System.out.println("Connected to database");
 	}
+	
 	@Override
 	public Set<Product> getAll() {
 		// TODO Auto-generated method stub
@@ -52,9 +49,26 @@ public class ProductDao implements Dao<Product>{
 	}
 
 	@Override
-	public void save(Product t) {
-		// TODO Auto-generated method stub
-		
+	public void save(Product product) {
+		connect();
+		Document doc = new Document("id", product.getId());
+		doc.append("price", product.getPrice());
+		doc.append("amount", product.getAmount());
+		if(product instanceof Tree) {
+			Tree tree = (Tree)product;
+			doc.append("type", "Tree");
+			doc.append("height", tree.getHeight());
+		}else if(product instanceof Flower) {
+			Flower flower = (Flower)product;
+			doc.append("type", "Flower");
+			doc.append("color", flower.getColor());
+		}else if(product instanceof Decoration) {
+			Decoration deco = (Decoration)product;
+			doc.append("type", "Decoration");
+			doc.append("material", deco.getMaterial());
+		}
+		collection.insertOne(doc);
+		System.out.println("Product added succesfully");
 	}
 
 	@Override

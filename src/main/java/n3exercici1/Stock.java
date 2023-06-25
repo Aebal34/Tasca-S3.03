@@ -14,8 +14,7 @@ public class Stock {
 	public Stock(ProductDao productDao) {
 		value = 0;
 		this.productDao = productDao;
-		this.products = productDao.getAll();
-		updateValue();
+		//this.products = productDao.getAll();
 	}
 	
 	//---GETTERS & SETTERS---

@@ -1,47 +1,19 @@
 package n3exercici1;
 
-import org.bson.Document;
-
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
-
 public class App {
 
 	public static void main(String[] args) {
 		
-		String uri = "mongodb+srv://admin:admin@mongodb.zf49r2c.mongodb.net/MongoDB";
-		MongoClientURI clientUri = new MongoClientURI(uri);
-		MongoClient client = new MongoClient(clientUri);
-		
-		MongoDatabase mongoDatabase = client.getDatabase("MongoDB");
-		MongoCollection<Document> collection = mongoDatabase.getCollection("Florists");
-		
-		Document doc = new Document("Type: ", "Tree");
-		doc.append("height", 2.95);
-		doc.append("price", 29.95);
-		doc.append("amount", 20);
-		doc.append("id", "T1");
-		
-		collection.insertOne(doc);
-		
-		
-		
-		
-		/*//Instantiate florist with filepath of Stock.txt
-		String url = "jdbc:mysql://localhost:3306/florists";
-		String userName = "root";
-		String password = "9595";
-		Florist botanicula = new Florist("Botanicula", new Stock(new ProductDao(url, userName, password)), new TicketDao(url, userName, password));
+		//Instantiate florist with filepath of Stock.txt
+		Florist botanicula = new Florist("Botanicula", new Stock(new ProductDao()), new TicketDao());
 		
 		//Instantiate Stock and add 2 trees, 2 flowers and 2 decorations
 		
 		
 		Stock botaniculaStock = botanicula.getStock();
 		
-		botaniculaStock.addProduct(new Tree(2.78f, 69.95f, 23));
-		botaniculaStock.addProduct(new Tree(2.55f, 29.95f, 44));
+		botaniculaStock.addProduct(new Tree(2.78f, 69.95f, 20));
+		/*botaniculaStock.addProduct(new Tree(2.55f, 29.95f, 44));
 		botaniculaStock.addProduct(new Flower("Purple", 18.45f, 13));
 		botaniculaStock.addProduct(new Flower("White", 14.25f, 25));
 		botaniculaStock.addProduct(new Decoration("Wood", 129.99f, 22));
