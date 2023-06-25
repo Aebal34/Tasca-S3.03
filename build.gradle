@@ -8,4 +8,6 @@ repositories {
 dependencies {
     // Get the MySQL JDBC driver
     implementation 'mysql:mysql-connector-java:8.0.33'
+    // https://mvnrepository.com/artifact/org.mongodb/mongodb-driver
+	implementation 'org.mongodb:mongodb-driver:3.12.14'  
 }

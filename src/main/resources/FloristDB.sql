@@ -1,6 +1,6 @@
 CREATE TABLE Trees(
 	id VARCHAR(4) PRIMARY KEY REFERENCES Products(id),
-    height DOUBLE
+    height FLOAT
     );
 CREATE TABLE Flowers(
 	id VARCHAR(4) PRIMARY KEY REFERENCES Products(id),
