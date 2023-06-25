@@ -13,6 +13,8 @@ public class App {
 		Stock botaniculaStock = botanicula.getStock();
 		
 		botaniculaStock.addProduct(new Tree(2.78f, 69.95f, 20));
+		
+		botaniculaStock.removeProduct("T1", 5);
 		/*botaniculaStock.addProduct(new Tree(2.55f, 29.95f, 44));
 		botaniculaStock.addProduct(new Flower("Purple", 18.45f, 13));
 		botaniculaStock.addProduct(new Flower("White", 14.25f, 25));
