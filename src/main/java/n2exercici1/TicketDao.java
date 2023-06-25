@@ -58,13 +58,11 @@ public class TicketDao implements Dao<Ticket>{
 		try {
 			connect();
 			Statement statement = connection.createStatement();
-			ResultSet result = statement.executeQuery("SELECT P.productId, P.ticketId, P.amount, P.price, T.floristId "
-														+ "FROM Purchases P "
-														+ "LEFT JOIN Tickets T ON P.ticketId = T.id;");
+			ResultSet result = statement.executeQuery("SELECT id, floristId FROM Tickets;");
 			//Loop through each result of the query to find different tickets and it's items
 			while (result.next()) {
-				int id = result.getInt("P.ticketId");  
-				Ticket ticket = new Ticket(getTicket(id), result.getInt("T.floristId"));
+				int id = result.getInt("id");  
+				Ticket ticket = new Ticket(getTicket(id), result.getInt("floristId"));
 				tickets.add(ticket);
 			}
 		} catch (SQLException e) {
@@ -86,6 +84,7 @@ public class TicketDao implements Dao<Ticket>{
 					statement.setInt(3, product.getAmount());
 					statement.setFloat(4, product.getPrice());
 					rowsAffected += statement.executeUpdate();
+					System.out.println("Rows affected in saving into purchases: "+rowsAffected);
 				}
 			}
 			query = "INSERT INTO Tickets VALUES (?,?,?);";

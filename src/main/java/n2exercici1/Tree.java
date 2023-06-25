@@ -34,6 +34,14 @@ public class Tree extends Product{
 		this.height = height;
 	}
 	
+	public static int getCount() {
+		return count;
+	}
+	
+	public static void setCount(int newCount) {
+		count = newCount;
+	}
+	
 	//Override HashCode and Equals to avoid having the same Trees duplicated
 	@Override
 	public int hashCode() {

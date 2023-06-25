@@ -52,6 +52,10 @@ public class ProductDao implements Dao<Product>{
 																	+ "LEFT JOIN Trees AS T ON P.id = T.id "
 																	+ "LEFT JOIN Flowers AS F ON P.id = F.id "
 																	+ "LEFT JOIN Decorations AS D ON P.id = D.id;");
+				//We store highest product's id to avoid saving current entries in database
+				int highestTreeId=1;
+				int highestFlowerId=1;
+				int highestDecorationId=1;
 				//Loop through each result of the query
 				while (result.next()) {
 					String id = result.getString("P.id");
@@ -70,16 +74,31 @@ public class ProductDao implements Dao<Product>{
 					if(!productExists) {
 						switch(id.charAt(0)) {
 							case 'T':
+								//Logic to have always the count and id correlated to the highest to avoid repeating ids
+								highestTreeId = Integer.parseInt(id.substring(1));
+								if(highestTreeId > Tree.getCount()) {
+									Tree.setCount(highestTreeId);
+								}
 								var tree = new Tree(result.getFloat("specific_characteristic"), price, amount);
 								tree.setId(id);
 								products.add(tree);
 								break;
 							case 'F':
+								//Logic to have always the count and id correlated to the highest to avoid repeating ids
+								highestFlowerId = Integer.parseInt(id.substring(1));
+								if(highestFlowerId > Flower.getCount()) {
+									Flower.setCount(highestFlowerId);
+								}
 								var flower = new Flower(result.getString("specific_characteristic"), price, amount);
 								flower.setId(id);
 								products.add(flower);
 								break;
 							case 'D':
+								//Logic to have always the count and id correlated to the highest to avoid repeating ids
+								highestDecorationId = Integer.parseInt(id.substring(1));
+								if(highestDecorationId > Decoration.getCount()) {
+									Decoration.setCount(highestDecorationId);
+								}
 								var decoration = new Decoration(result.getString("specific_characteristic"), price, amount);
 								decoration.setId(id);
 								products.add(decoration);

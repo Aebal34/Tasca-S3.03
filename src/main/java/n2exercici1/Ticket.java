@@ -74,15 +74,14 @@ public class Ticket{
 	}
 
 	//---LOGIC/VALIDATION---
-
-	public void addItem(String id, int ammount, Stock stock) {
+	public void addItem(String id, int amount, Stock stock) {
 		Product item = new Product();
 		item = stock.getProduct(id);
-		if(ammount <= item.getAmount()){
-			stock.removeProduct(id, ammount);
-			item.setAmount(ammount);
-			items.add(item);
-		}
+		//Remove product from stock because it's being purchased
+		stock.removeProduct(id, amount);
+		//We set the amount of the new instance of the item to add it to tickets without affecting the ones in stock
+		item.setAmount(amount);
+		items.add(item);
 		value = getItemsValue();
 	}
 	

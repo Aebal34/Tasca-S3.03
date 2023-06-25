@@ -41,6 +41,14 @@ public class Decoration extends Product{
 	public String getMaterial() {
 		return material;
 	}
+	
+	public static int getCount() {
+		return count;
+	}
+	
+	public static void setCount(int newCount) {
+		count = newCount;
+	}
 
 
 	//---VIEW---
