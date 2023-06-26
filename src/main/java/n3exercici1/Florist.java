@@ -36,11 +36,14 @@ public class Florist {
 	}
 	
 	public void addItemToTicket(int ticketId, String productId, int amount) {
-		for(Ticket ticket: tickets) {
-			if(ticketId==ticket.getId()) {
-				ticket.addItem(productId, amount, stock);
-			}
-		}
+		var ticket = tickets.stream()
+							.filter(t -> t.getId()==ticketId)
+							.findFirst()
+							.orElse(null);
+		ticket.addItem(productId, amount, stock);
+		//Now we add item to ticket in DB
+		Product product = stock.getProduct(productId);
+		ticketDao.addItemIntoTicket(ticket, product);
 	}
 	
 	//---VIEW---

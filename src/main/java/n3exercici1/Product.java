@@ -54,4 +54,9 @@ public class Product{
 	public void decreaseAmount(int amount) {
 		this.amount -= amount;
 	}
+
+	@Override
+	public String toString() {
+		return "Product id: " + id + ", price:" + price + ", amount:" + amount;
+	}
 }

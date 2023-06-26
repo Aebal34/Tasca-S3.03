@@ -82,20 +82,8 @@ public class Ticket{
 	public void addItem(String id, int amount, Stock stock) {
 		//We create a new instance of the product with the proper amount to save into the ticket
 		double price = stock.getProduct(id).getPrice();
-		switch(id.charAt(0)) {
-			case 'T':
-				Tree tree = new Tree(price, amount, id);
-				items.add(tree);
-				break;
-			case 'F':
-				Flower flower = new Flower(price, amount, id);
-				items.add(flower);
-				break;
-			case 'D':
-				Decoration deco = new Decoration(price, amount, id);
-				items.add(deco);
-				break;
-		}
+		Product prod = new Product(price, amount, id);
+		items.add(prod);
 		//Remove product from stock because it's being purchased
 		stock.removeProduct(id, amount);
 		updateValue();

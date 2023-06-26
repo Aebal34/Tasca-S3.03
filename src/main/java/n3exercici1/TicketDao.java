@@ -53,7 +53,7 @@ public class TicketDao implements Dao<Ticket>{
 				Set<Product> products = new HashSet<>();
 				List<Document> items = doc.getList("items", Document.class);
 				for(Document item : items) {
-					Product prod = new Product(item.getDouble("price"), item.getInteger("amount"), item.getString("id"));
+					Product prod = new Product(item.getDouble("price"), item.getInteger("amount"), item.getString("_id"));
 					products.add(prod);
 				}
 				int id = doc.getInteger("id");
@@ -68,10 +68,17 @@ public class TicketDao implements Dao<Ticket>{
 		return tickets;
 	}
 
-	@Override
-	public void update(Ticket t, String[] parameters) {
-		// TODO Auto-generated method stub
+	public void addItemIntoTicket(Ticket ticket, Product product) {
+		Document found = (Document)collection.find(new Document("id", ticket.getId())).first();
 		
+		if(found != null) {
+			System.out.println("The ticket has been found");
+			Document doc = new Document("_id", product.getId());
+			doc.append("amount", product.getAmount());
+			doc.append("price", product.getPrice());
+			Document updatedDoc = new Document("$push", new Document("items", doc));
+			collection.updateOne(found, updatedDoc);
+		}
 	}
 
 	@Override
@@ -84,8 +91,13 @@ public class TicketDao implements Dao<Ticket>{
 	}
 
 	@Override
-	public void delete(Ticket t) {
-		// TODO Auto-generated method stub
-		
+	public void delete(Ticket ticket) {
+		Document found = (Document)collection.find(new Document("id", ticket.getId())).first();
+		collection.deleteOne(found);
+	}
+
+	@Override
+	public void update(Ticket t, String[] parameters) {
+		//Not going to use this one
 	}
 }

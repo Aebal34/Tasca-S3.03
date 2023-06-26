@@ -23,11 +23,6 @@ public class Decoration extends Product{
 		count++;
 	}
 	
-	public Decoration(double price, int ammount, String id) {
-		super(price, ammount);
-		this.id = id;
-	}
-	
 	public Decoration() {
 		
 	}
@@ -74,6 +69,6 @@ public class Decoration extends Product{
 	//---VIEW---
 	@Override
 	public String toString() {
-		return "Decoration material: " + material + ", price:" + format.format(price)+", ammount:"+amount;
+		return "Decoration "+id+"= material: " + material + ", price:" + format.format(price)+", ammount:"+amount;
 	}
 }

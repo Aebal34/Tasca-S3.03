@@ -18,11 +18,6 @@ public class Flower extends Product{
 		count++;
 	}
 	
-	public Flower(double price, int ammount, String id) {
-		super(price, ammount);
-		this.id = id;
-	}
-	
 	public Flower() {
 	}
 
@@ -63,6 +58,6 @@ public class Flower extends Product{
 	//---VIEW---
 	@Override
 	public String toString() {
-		return "Flower color: " + color + ", price:" + format.format(price)+", ammount:"+amount;
+		return "Flower "+id+"= color: " + color + ", price:" + format.format(price)+", ammount:"+amount;
 	}
 }

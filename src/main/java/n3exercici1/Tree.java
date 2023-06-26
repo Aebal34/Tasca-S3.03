@@ -19,11 +19,6 @@ public class Tree extends Product{
 		count++;
 	}
 
-	public Tree(double price, int ammount, String id) {
-		super(price, ammount);
-		this.id = id;
-	}
-	
 	public Tree() {
 		
 	}
@@ -66,6 +61,6 @@ public class Tree extends Product{
 	//---VIEW---
 	@Override
 	public String toString() {
-		return "Tree height: " + format.format(height) + ", price:" + format.format(price)+", ammount:"+amount;
+		return "Tree "+id+"=height: " + format.format(height) + ", price:" + format.format(price)+", ammount:"+amount;
 	}
 }

@@ -4,14 +4,12 @@ public class App {
 
 	public static void main(String[] args) {
 		
-		//Instantiate florist with filepath of Stock.txt
+		//Instantiate florist with ProductDao and TicketDao
 		Florist botanicula = new Florist("Botanicula", new Stock(new ProductDao()), new TicketDao());
-		
-		//Instantiate Stock and add 2 trees, 2 flowers and 2 decorations
-		
 		
 		Stock botaniculaStock = botanicula.getStock();
 		
+		//Instantiate Stock and add 2 trees, 2 flowers and 2 decorations
 		botaniculaStock.addProduct(new Tree(2.78f, 69.95f, 20));
 		botaniculaStock.addProduct(new Tree(2.55f, 29.95f, 44));
 		botaniculaStock.addProduct(new Flower("Purple", 18.45f, 13));
@@ -22,17 +20,16 @@ public class App {
 		botaniculaStock.printStock();
 		
 		//Remove diverse products from stock
-		//botaniculaStock.removeProduct("T1", 15);
-		//botaniculaStock.removeProduct("F2", 14);
-		//botaniculaStock.removeProduct("D1", 12);
+		botaniculaStock.removeProduct("T1", 5);
+		botaniculaStock.removeProduct("F2", 14);
+		botaniculaStock.removeProduct("D1", 12);
 		
-		//botanicula.getStock().printStock();
+		botanicula.getStock().printStock();
 		
 		//We purchase the items we want
 		//Every time we buy a product, it's added and substracted to the adequate tables on MySql
 		botanicula.purchase("D2", 3);
-		botanicula.getStock().printStock();
-		/*botanicula.addItemToTicket(1, "F1", 2);
+		botanicula.addItemToTicket(1, "F1", 2);
 		botanicula.purchase("T2", 1);
 		
 		botanicula.getStock().printStock();
@@ -41,6 +38,6 @@ public class App {
 		botanicula.printTickets();
 		
 		//And we look at all the money we've won
-		botanicula.printTotalSales();*/
+		botanicula.printTotalSales();
 	}
 }
