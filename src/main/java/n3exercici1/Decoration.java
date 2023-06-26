@@ -1,13 +1,17 @@
 package n3exercici1;
 
+import java.text.DecimalFormat;
+import java.util.Objects;
+
 public class Decoration extends Product{
 
 	//---ATTRIBUTES---
 	private static int count = 1;
 	private String material;
+	private final DecimalFormat format = new DecimalFormat("#.##");
 	
 	//---CONSTRUCTORS---
-	public Decoration(String material, float price, int ammount) {
+	public Decoration(String material, double price, int ammount) {
 		super(price, ammount);
 		if(material.toUpperCase().equals("WOOD") || material.toUpperCase().equals("METAL")) {
 			this.material = material;
@@ -19,7 +23,7 @@ public class Decoration extends Product{
 		count++;
 	}
 	
-	public Decoration(float price, int ammount, String id) {
+	public Decoration(double price, int ammount, String id) {
 		super(price, ammount);
 		this.id = id;
 	}
@@ -50,10 +54,26 @@ public class Decoration extends Product{
 		count = newCount;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(material);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Decoration other = (Decoration) obj;
+		return Objects.equals(material, other.material);
+	}
 
 	//---VIEW---
 	@Override
 	public String toString() {
-		return "Decoration material: " + material + ", price:" + price+", ammount:"+amount;
+		return "Decoration material: " + material + ", price:" + format.format(price)+", ammount:"+amount;
 	}
 }

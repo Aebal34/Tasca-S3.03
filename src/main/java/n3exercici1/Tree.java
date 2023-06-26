@@ -1,15 +1,18 @@
 package n3exercici1;
 
 import java.util.Objects;
+import java.text.*;
+
 
 public class Tree extends Product{
 
 	//---ATTRIBUTES---
 	private static int count = 1;
-	private float height;
+	private double height;
+	private final DecimalFormat format = new DecimalFormat("#.##");
 	
 	//---CONSTRUCTORS---
-	public Tree(float height, float price, int ammount) {
+	public Tree(double height, double price, int ammount) {
 		super(price, ammount);
 		this.height = height;
 		this.id = "T"+count;
@@ -26,11 +29,11 @@ public class Tree extends Product{
 	}
 	
 	//---GETTERS & SETTERS
-	public float getHeight() {
+	public double getHeight() {
 		return height;
 	}
 
-	public void setHeight(float height) {
+	public void setHeight(double height) {
 		this.height = height;
 	}
 	
@@ -57,12 +60,12 @@ public class Tree extends Product{
 		if (getClass() != obj.getClass())
 			return false;
 		Tree other = (Tree) obj;
-		return Float.floatToIntBits(height) == Float.floatToIntBits(other.height);
+		return Double.doubleToLongBits(height) == Double.doubleToLongBits(other.height);
 	}
 
 	//---VIEW---
 	@Override
 	public String toString() {
-		return "Tree height: " + height + ", price:" + price+", ammount:"+amount;
+		return "Tree height: " + format.format(height) + ", price:" + format.format(price)+", ammount:"+amount;
 	}
 }

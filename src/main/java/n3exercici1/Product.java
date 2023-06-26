@@ -5,12 +5,12 @@ import java.util.Objects;
 public class Product{
 
 	//---ATTRIBUTES---
-	protected float price;
+	protected double price;
 	protected String id;
 	protected int amount;
 	
 	//---CONSTRUCTOR---
-	public Product(float price, int amount) {
+	public Product(double price, int amount) {
 		this.price = price;
 		this.amount = amount;
 	}
@@ -20,7 +20,7 @@ public class Product{
 	}
 	
 	//---GETTERS & SETTERS---
-	public float getPrice() {
+	public double getPrice() {
 		return price;
 	}
 	

@@ -17,7 +17,7 @@ public class ProductDao implements Dao<Product>{
 	
 	//---CONSTRUCTOR---
 	public ProductDao() {
-		
+		connect();
 	}
 	
 	//---GETTERS&SETTERS---
@@ -39,13 +39,44 @@ public class ProductDao implements Dao<Product>{
 	
 	@Override
 	public Set<Product> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		/*We use MongoCursor instead of FindIterable because we don't need the methods included in FindIterable
+		  but as MongoCursor interface extends AutoCloseable, we can try-with-resource with it*/
+		try(MongoCursor<Document> cursor = collection.find().iterator()){
+			while(cursor.hasNext()) {
+				Document doc = cursor.next();
+				if(doc.getString("type").equals("Tree")) {
+					Tree tree = new Tree(doc.getDouble("height"), doc.getDouble("price"), doc.getInteger("amount"));
+					tree.setId(doc.getString("id"));
+					products.add(tree);
+					//To avoid storing ids that are equal to others created
+					if(Tree.getCount() < Integer.parseInt(doc.getString("id").substring(1))) {
+						Tree.setCount(Integer.parseInt(doc.getString("id").substring(1)));
+					}
+				}else if(doc.get("type").equals("Flower")) {
+					Flower flower = new Flower(doc.getString("color"), doc.getDouble("price"), doc.getInteger("amount"));
+					flower.setId(doc.getString("id"));
+					products.add(flower);
+					//To avoid storing ids that are equal to others created
+					if(Flower.getCount() < Integer.parseInt(doc.getString("id").substring(1))) {
+						Flower.setCount(Integer.parseInt(doc.getString("id").substring(1)));
+					}
+				}else if(doc.get("type").equals("Decoration")) {
+					Decoration deco = new Decoration(doc.getString("material"), doc.getDouble("price"), doc.getInteger("amount"));
+					deco.setId(doc.getString("id"));
+					products.add(deco);
+					//To avoid storing ids that are equal to others created
+					if(Decoration.getCount() < Integer.parseInt(doc.getString("id").substring(1))) {
+						Decoration.setCount(Integer.parseInt(doc.getString("id").substring(1)));
+					}
+				}
+			}
+		}
+		System.out.println("Products imported from database succesfully");
+		return products;
 	}
 
 	@Override
 	public void update(Product product, String[] parameters) {//Parameters should be Price, Amount, Special_Characteristic
-		connect();
 		//Find the document we want to update
 		Document found = (Document)collection.find(new Document("id", product.getId())).first();
 		if(found != null) { 
@@ -94,7 +125,6 @@ public class ProductDao implements Dao<Product>{
 
 	@Override
 	public void save(Product product) {
-		connect();
 		Document doc = new Document("id", product.getId());
 		doc.append("price", product.getPrice());
 		doc.append("amount", product.getAmount());

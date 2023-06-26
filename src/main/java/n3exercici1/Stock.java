@@ -12,9 +12,9 @@ public class Stock {
 	
 	//---CONSTRUCTOR---
 	public Stock(ProductDao productDao) {
-		value = 0;
 		this.productDao = productDao;
-		//this.products = productDao.getAll();
+		this.products = productDao.getAll();
+		updateValue();
 	}
 	
 	//---GETTERS & SETTERS---
@@ -64,9 +64,11 @@ public class Stock {
 	
 	//---LOGIC/VALIDATION---
 	public void addProduct(Product product) {
+		if(!products.contains(product)) {
+			productDao.save(product);
+			value += product.getPrice()*product.getAmount();
+		}
 		products.add(product);
-		value += product.getPrice()*product.getAmount();
-		productDao.save(product);
 	}
 	
 	public void removeProduct(String id, int amount) {
