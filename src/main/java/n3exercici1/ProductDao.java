@@ -146,8 +146,8 @@ public class ProductDao implements Dao<Product>{
 	}
 
 	@Override
-	public void delete(Product t) {
-		// TODO Auto-generated method stub
-		
+	public void delete(Product product) {
+		Document found = (Document)collection.find(new Document("id", product.getId())).first();
+		collection.deleteOne(found);		
 	}
 }

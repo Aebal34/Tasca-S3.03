@@ -22,7 +22,7 @@ public class App {
 		botaniculaStock.printStock();
 		
 		//Remove diverse products from stock
-		/*botaniculaStock.removeProduct("T1", 11);
+		botaniculaStock.removeProduct("T1", 55);
 		botaniculaStock.removeProduct("F2", 14);
 		botaniculaStock.removeProduct("D1", 12);
 		
@@ -30,7 +30,7 @@ public class App {
 		
 		//We purchase the items we want
 		//Every time we buy a product, it's added and substracted to the adequate tables on MySql
-		botanicula.purchase("D2", 3);
+		/*botanicula.purchase("D2", 3);
 		botanicula.addItemToTicket(1, "F1", 2);
 		botanicula.purchase("T2", 1);
 		
