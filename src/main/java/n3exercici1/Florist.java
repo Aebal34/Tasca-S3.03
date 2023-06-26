@@ -15,7 +15,7 @@ public class Florist {
 		this.name = name;
 		this.stock = stock;
 		this.ticketDao = ticketDao;
-		//tickets = ticketDao.getAll();
+		tickets = ticketDao.getAll();
 	}
 	
 	//---GETTERS & SETTERS---

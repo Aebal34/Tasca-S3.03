@@ -2,10 +2,9 @@ package n3exercici1;
 
 import java.util.*;
 
+import com.mongodb.*;
 import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.*;
 
 import org.bson.Document;
 import org.bson.codecs.pojo.PojoCodecProvider;
@@ -20,7 +19,6 @@ public class TicketDao implements Dao<Ticket>{
 	
 	//---CONSTRUCTOR---
 	public TicketDao() {
-		
 		connect();
 		registerCodecs();
 	}
@@ -49,8 +47,25 @@ public class TicketDao implements Dao<Ticket>{
 	//---PERSISTENCE---
 	@Override
 	public Set<Ticket> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		try(MongoCursor<Document> cursor = collection.find().iterator()){
+			while(cursor.hasNext()) {
+				Document doc = cursor.next();
+				Set<Product> products = new HashSet<>();
+				List<Document> items = doc.getList("items", Document.class);
+				for(Document item : items) {
+					Product prod = new Product(item.getDouble("price"), item.getInteger("amount"), item.getString("id"));
+					products.add(prod);
+				}
+				int id = doc.getInteger("id");
+				var ticket = new Ticket(products, id);
+				tickets.add(ticket);
+				//Id integrity validation
+				if(Ticket.getCount() <= id) {
+					Ticket.setCount(id+1);
+				}
+			}
+		}
+		return tickets;
 	}
 
 	@Override

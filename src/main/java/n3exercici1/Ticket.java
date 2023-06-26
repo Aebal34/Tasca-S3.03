@@ -17,6 +17,11 @@ public class Ticket{
 		this.id = count;
 		count++;
 	}
+	public Ticket(Set<Product> items, int id) {
+		this.items = items;
+		value = getItemsValue();
+		this.id = id;
+	}
 	public Ticket() {
 		items = new HashSet<>();
 		this.id = count;
@@ -46,6 +51,14 @@ public class Ticket{
 	
 	public Set<Product> getItems(){
 		return items;
+	}
+	
+	public static int getCount() {
+		return count;
+	}
+	
+	public static void setCount(int newCount) {
+		count = newCount;
 	}
 	
 	@Override
