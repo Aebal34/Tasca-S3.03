@@ -5,8 +5,6 @@ import java.util.*;
 public class Florist {
 
 	//---ATTRIBUTES---
-	private static int count = 1;
-	private int id;
 	private String name;
 	private Stock stock;
 	private Set<Ticket> tickets= new HashSet<Ticket>();
@@ -14,12 +12,10 @@ public class Florist {
 	
 	//---CONSTRUCTOR---
 	public Florist(String name, Stock stock, TicketDao ticketDao) {
-		id = count;
 		this.name = name;
 		this.stock = stock;
 		this.ticketDao = ticketDao;
-		tickets = ticketDao.getAll();
-		count++;
+		//tickets = ticketDao.getAll();
 	}
 	
 	//---GETTERS & SETTERS---
@@ -27,28 +23,16 @@ public class Florist {
 		return stock;
 	}
 	
-	public int getId() {
-		return id;
-	}
-	
 	//---FUNCTIONALITY---
 	public void purchase(String id, int amount) {
-		var items = new HashSet<Product>();
-		var product = stock.getProduct(id);
-		for(Product item : stock.getProducts()) {
-			if(item.equals(product)) {
-				//Add item to "shopping cart" making sure they are in stock
-				items.add(item);
-			}
-		}
-		//Once we have the items selected, we add them to a created ticket
-		var ticket = new Ticket(this.id);
-		for(Product item : items) {
-			ticket.addItem(item.getId(), amount, stock);
-		}
-		//Add ticket to hashset and to db
-		tickets.add(ticket);
-		ticketDao.save(ticket);
+		Product product = stock.getProduct(id);
+		if(product != null) {
+			var ticket = new Ticket();
+			ticket.addItem(id, amount, stock);
+			//Add ticket to hashset and to db
+			tickets.add(ticket);
+			ticketDao.save(ticket);
+		}		
 	}
 	
 	public void addItemToTicket(int ticketId, String productId, int amount) {

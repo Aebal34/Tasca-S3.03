@@ -50,7 +50,7 @@ public class ProductDao implements Dao<Product>{
 					products.add(tree);
 					//To avoid storing ids that are equal to others created
 					if(Tree.getCount() < Integer.parseInt(doc.getString("id").substring(1))) {
-						Tree.setCount(Integer.parseInt(doc.getString("id").substring(1)));
+						Tree.setCount((Integer.parseInt(doc.getString("id").substring(1)))+1);
 					}
 				}else if(doc.get("type").equals("Flower")) {
 					Flower flower = new Flower(doc.getString("color"), doc.getDouble("price"), doc.getInteger("amount"));
@@ -58,7 +58,7 @@ public class ProductDao implements Dao<Product>{
 					products.add(flower);
 					//To avoid storing ids that are equal to others created
 					if(Flower.getCount() < Integer.parseInt(doc.getString("id").substring(1))) {
-						Flower.setCount(Integer.parseInt(doc.getString("id").substring(1)));
+						Flower.setCount((Integer.parseInt(doc.getString("id").substring(1)))+1);
 					}
 				}else if(doc.get("type").equals("Decoration")) {
 					Decoration deco = new Decoration(doc.getString("material"), doc.getDouble("price"), doc.getInteger("amount"));
@@ -66,7 +66,7 @@ public class ProductDao implements Dao<Product>{
 					products.add(deco);
 					//To avoid storing ids that are equal to others created
 					if(Decoration.getCount() < Integer.parseInt(doc.getString("id").substring(1))) {
-						Decoration.setCount(Integer.parseInt(doc.getString("id").substring(1)));
+						Decoration.setCount((Integer.parseInt(doc.getString("id").substring(1)))+1);
 					}
 				}
 			}
@@ -97,7 +97,7 @@ public class ProductDao implements Dao<Product>{
 			}
 			if(product instanceof Tree) {
 				if(parameters[2] != null) { //If there's a height to be updated
-					float height = Float.parseFloat(parameters[3]);
+					float height = Float.parseFloat(parameters[2]);
 					Bson updatedValue = new Document("height", height);
 					Bson updateOperation = new Document("$set", updatedValue);
 					collection.updateOne(found, updateOperation);
@@ -105,7 +105,7 @@ public class ProductDao implements Dao<Product>{
 				}
 			}else if(product instanceof Flower) {
 				if(parameters[2] != null) { //If there's a color to be updated
-					String color = parameters[3];
+					String color = parameters[2];
 					Bson updatedValue = new Document("color", color);
 					Bson updateOperation = new Document("$set", updatedValue);
 					collection.updateOne(found, updateOperation);
@@ -113,7 +113,7 @@ public class ProductDao implements Dao<Product>{
 				}
 			}else if(product instanceof Decoration) {
 				if(parameters[2] != null) { //If there's a material to be updated
-					String material = parameters[3];
+					String material = parameters[2];
 					Bson updatedValue = new Document("material", material);
 					Bson updateOperation = new Document("$set", updatedValue);
 					collection.updateOne(found, updateOperation);

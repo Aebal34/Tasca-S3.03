@@ -22,16 +22,17 @@ public class App {
 		botaniculaStock.printStock();
 		
 		//Remove diverse products from stock
-		botaniculaStock.removeProduct("T1", 55);
-		botaniculaStock.removeProduct("F2", 14);
-		botaniculaStock.removeProduct("D1", 12);
+		//botaniculaStock.removeProduct("T1", 15);
+		//botaniculaStock.removeProduct("F2", 14);
+		//botaniculaStock.removeProduct("D1", 12);
 		
-		botanicula.getStock().printStock();
+		//botanicula.getStock().printStock();
 		
 		//We purchase the items we want
 		//Every time we buy a product, it's added and substracted to the adequate tables on MySql
-		/*botanicula.purchase("D2", 3);
-		botanicula.addItemToTicket(1, "F1", 2);
+		botanicula.purchase("D2", 3);
+		botanicula.getStock().printStock();
+		/*botanicula.addItemToTicket(1, "F1", 2);
 		botanicula.purchase("T2", 1);
 		
 		botanicula.getStock().printStock();

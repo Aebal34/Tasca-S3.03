@@ -9,22 +9,18 @@ public class Ticket{
 	private float value;
 	private int id;
 	private static int count = 1;
-	private int floristId;
 	
 	//---CONSTRUCTORS---
-	public Ticket(Set<Product> items, int floristId) {
+	public Ticket(Set<Product> items) {
 		this.items = items;
 		value = getItemsValue();
-		count++;
-		this.floristId=floristId;
-	}
-	
-	public Ticket(int floristId) {
-		items = new HashSet<Product>();
-		value = 0;
 		this.id = count;
 		count++;
-		this.floristId=floristId;
+	}
+	public Ticket() {
+		items = new HashSet<>();
+		this.id = count;
+		count++;
 	}
 	
 	//---GETTERS & SETTERS---
@@ -52,10 +48,6 @@ public class Ticket{
 		return items;
 	}
 	
-	public int getFloristId() {
-		return floristId;
-	}
-	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -75,14 +67,25 @@ public class Ticket{
 
 	//---LOGIC/VALIDATION---
 	public void addItem(String id, int amount, Stock stock) {
-		Product item = new Product();
-		item = stock.getProduct(id);
+		//We create a new instance of the product with the proper amount to save into the ticket
+		double price = stock.getProduct(id).getPrice();
+		switch(id.charAt(0)) {
+			case 'T':
+				Tree tree = new Tree(price, amount, id);
+				items.add(tree);
+				break;
+			case 'F':
+				Flower flower = new Flower(price, amount, id);
+				items.add(flower);
+				break;
+			case 'D':
+				Decoration deco = new Decoration(price, amount, id);
+				items.add(deco);
+				break;
+		}
 		//Remove product from stock because it's being purchased
 		stock.removeProduct(id, amount);
-		//We set the amount of the new instance of the item to add it to tickets without affecting the ones in stock
-		item.setAmount(amount);
-		items.add(item);
-		value = getItemsValue();
+		updateValue();
 	}
 	
 	//---VIEW---
@@ -95,7 +98,7 @@ public class Ticket{
 		System.out.println("		|Total value: "+value+" }");
 	}
 	
-	public void updateValue() {
+	private void updateValue() {
 		this.value = getItemsValue();
 	}
 }

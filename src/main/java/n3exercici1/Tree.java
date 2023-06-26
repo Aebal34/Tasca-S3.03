@@ -19,7 +19,7 @@ public class Tree extends Product{
 		count++;
 	}
 
-	public Tree(float price, int ammount, String id) {
+	public Tree(double price, int ammount, String id) {
 		super(price, ammount);
 		this.id = id;
 	}
